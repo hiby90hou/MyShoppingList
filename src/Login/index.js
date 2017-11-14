@@ -3,6 +3,7 @@ import { View, Text, Button, TextInput, Alert, StyleSheet, Switch, TouchableOpac
   ToastAndroid, } from 'react-native';
 import CheckPassword from '../checkPassword/index.js'
 import SignUp from '../signUp/'
+import RNFS from 'react-native-fs';
 
 class Login extends Component {
     constructor(props){
@@ -20,14 +21,51 @@ class Login extends Component {
   loginCheck = ()=>{
     const {updateUserName} = this.props
 
-    let correctUserName = 'hiby';
-    let correctPassword = 'hiby';
-    // const {updateUserName} = this.props
-    if(correctUserName == this.state.inputUserName &&
-      correctPassword == this.state.inputPassword){
-        updateUserName(correctUserName)
-    }else{
-      Alert.alert(
+
+    //read UserLog file
+    console.log("readfile")
+
+    var RNFS = require('react-native-fs');
+
+    //open userlog file and save the data to userLog
+    //create a path you want to read
+    const path = RNFS.ExternalDirectoryPath + '/MyShoppingList/userLog.json';
+
+    RNFS.readFile(path)
+    .then((statResult) => {
+      console.log(RNFS.exists(path));
+      if (RNFS.exists(path)) {
+        // if we have a file, read it
+        return RNFS.readFile(path, 'utf8');
+      }
+
+      return 'no file';
+    })
+    .then((contents) => {
+      // log the file contents
+      let userLog = JSON.parse(contents)
+    //   this.setState({
+    //     userLog
+    //   })
+
+      console.log("userLog")
+      console.log(userLog)
+    
+    //check user
+
+    let errorAlert = true
+
+    for(let i=0;i<userLog.length;i++){
+      if(userLog[i].username==this.state.inputUserName && 
+        userLog[i].password==this.state.inputPassword){
+        updateUserName(this.state.inputUserName)
+        errorAlert = false
+      }
+    }
+    // let correctUserName = 'hiby90hou';
+    // let correctPassword = 'hiby';
+    if(errorAlert){
+            Alert.alert(
         'Wrong Password',
         'Please try again',
         [       
@@ -36,6 +74,11 @@ class Login extends Component {
         { cancelable: false }
       )
     }
+
+    })
+    .catch((err) => {
+      console.log(err.message, err.code);
+    })
   }
 
 

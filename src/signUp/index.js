@@ -1,7 +1,14 @@
 
 import React, {Component} from 'react';
-import { View, Text, Button, TextInput, Alert, StyleSheet, Switch, TouchableOpacity, Image,BackHandler,
+import { View, Text, Button, TextInput, StyleSheet, Switch, TouchableOpacity, Image,BackHandler,
   ToastAndroid, } from 'react-native';
+import RNFS from 'react-native-fs';
+
+// user log data struct
+// userLog=[{username:username1,
+//           password:'password1'},
+//           {username:username2,
+//           password:'password2'}]
 
 class signUp extends Component {
     constructor(props){
@@ -9,13 +16,47 @@ class signUp extends Component {
     this.state = {
       inputUserName: '',
       inputPassword1: '',
-      inputPassword2: ''
+      inputPassword2: '',
+      userLog:[{username:'default', password:'default', autoLogin:false}]
     }
     this.backButtonListener = null
   }
+
   //when we go to this page, run componentDidMount 
   componentDidMount(){
+
   	console.log('componentWillmount');
+
+  	//read user log file
+  	console.log("readfile")
+
+  	var RNFS = require('react-native-fs');
+  	//create a path you want to read
+    const path = RNFS.ExternalDirectoryPath + '/MyShoppingList/userLog.json';
+    RNFS.readFile(path)
+    .then((statResult) => {
+      console.log(RNFS.exists(path));
+      if (RNFS.exists(path)) {
+        // if we have a file, read it
+        return RNFS.readFile(path, 'utf8');
+      }
+
+      return 'no file';
+    })
+    .then((contents) => {
+      // log the file contents
+      let userLog = JSON.parse(contents)
+      this.setState({
+      	userLog
+      })
+      console.log(this.state.userLog)
+      
+    })
+    .catch((err) => {
+      console.log(err.message, err.code);
+    });
+
+    
   	//go back button setting
 	this.backButtonListener = BackHandler.addEventListener('hardwareBackPress',()=>{
 		const {handleSignUp, signUp} = this.props
@@ -31,6 +72,7 @@ class signUp extends Component {
 	
   }
 
+  // when go out from this page, run componentWillUnmount
   componentWillUnmount(){
 
   	// BackHandler.removeEventListener('hardwareBackPress',()=>{});
@@ -38,38 +80,99 @@ class signUp extends Component {
   	console.log('componentWillUnmount');
   }
 
+	//tracking input
+	handleUserName = (inputUserName) =>{ 
+		inputUserName = inputUserName.replace(/(^\s*)|(\s*)$/g,"").toLowerCase()
+		return this.setState({inputUserName})
+	}
+	handlePassword1 = (inputPassword1) =>{ 
+	return this.setState({inputPassword1})
+	}
+	handlePassword2 = (inputPassword2) =>{ 
+	return this.setState({inputPassword2})
+	}  
 
-  handleUserName = (inputUserName) =>{ 
-    return this.setState({inputUserName})
-  }
-  handlePassword1 = (inputPassword1) =>{ 
-    return this.setState({inputPassword1})
-  }
-  handlePassword2 = (inputPassword2) =>{ 
-    return this.setState({inputPassword2})
-  }  
+	
  
-   loginCheck = ()=>{
-    const {handleSignUp, updateUserName} = this.props
+ 	loginCheck = () =>{
+ 		const {handleSignUp,updateUserName}= this.props
 
-	handleSignUp()
-	updateUserName(this.state.inputUserName)
-    // let correctUserName = 'hiby';
-    // let correctPassword = 'hiby';
-    // // const {updateUserName} = this.props
-    // if(correctUserName == this.state.inputUserName &&
-    //   correctPassword == this.state.inputPassword){
-    //     updateUserName(correctUserName)
-    // }else{
-    //   Alert.alert(
-    //     'Wrong Password',
-    //     'Please try again',
-    //     [       
-    //       {text: 'OK', onPress: () =>{console.log('inputUserName:'+this.state.inputUserName);console.log('inputPassword:'+this.state.inputPassword);}},
-    //     ],
-    //     { cancelable: false }
-    //   )
-    // }
+ 		checkArr = (username) => {
+			console.log("checkArr")
+			let Arr = this.state.userLog
+			for(let i=0;i<Arr.length;i++){
+				console.log(Arr[i].username)
+				if(Arr[i].username==username){
+					console.log('pass checkArr')
+					return true
+				}
+			}
+			return false
+		}
+
+
+		if(this.state.inputUserName==''){
+		 	ToastAndroid.showWithGravity('Please input valid username',ToastAndroid.SHORT, ToastAndroid.CENTER)
+			console.log('Please input valid username')
+		}
+ 		else if(this.state.inputPassword1!=this.state.inputPassword2){
+	 		ToastAndroid.showWithGravity('Password does not match',ToastAndroid.SHORT, ToastAndroid.CENTER)
+ 		console.log('Password does not match')
+ 		}
+ 		else if (this.state.inputPassword1.length<6){
+ 			ToastAndroid.showWithGravity('Please input password,\n The min password length is 6',ToastAndroid.SHORT, ToastAndroid.CENTER)
+ 		console.log('Please input password')
+ 		}
+ 		else if(checkArr(this.state.inputUserName)){
+			ToastAndroid.showWithGravity('Username already exists',ToastAndroid.SHORT, ToastAndroid.CENTER)
+ 		console.log('Username already exists')
+ 		}
+ 		else{
+ 			console.log('else')
+
+ 			console.log(this.state.userLog)
+
+ 			// this.state.userLog
+			const newUser = {
+		      username:this.state.inputUserName, 
+		      password:this.state.inputPassword1, 
+		      autoLogin:false
+		    }
+
+		    let newLog = this.state.userLog
+ 			newLog.push(newUser)
+ 			console.log(newLog)
+
+ 			// write file
+
+			// require the module
+			var RNFS = require('react-native-fs');
+
+			var saveStr = JSON.stringify(newLog)
+			console.log(saveStr);
+
+			// create a path you want to write to
+			const path = RNFS.ExternalDirectoryPath + '/MyShoppingList/userLog.json';
+
+			//make dir for this file
+			RNFS.mkdir(RNFS.ExternalDirectoryPath +'/MyShoppingList/')
+
+			// write the file
+			RNFS.writeFile(path, saveStr, 'utf8')
+			  .then((success) => {
+			    console.log('USERLOG FILE WRITTEN! Path:');
+			    console.log(path);
+			    // console.log(path);
+			  })
+			  .catch((err) => {
+			    console.log(err.message);
+			  });
+
+			//success signup
+			handleSignUp()
+			updateUserName(this.state.inputUserName)
+ 		}
+   
   }
 	render() {
 		// defined style
