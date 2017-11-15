@@ -119,12 +119,21 @@ class App extends Component {
   }
 
   onActionSelected=(position) => {
-    if (position === 0) { // index of 'Settings'
-      alert("profile")
+    if (position === 0) {
+      alert("Setting")
     }
     if (position === 1) {
-      alert("setting")
+      alert("Log Off")
+      console.log("Logoff")
+      this.setState({
+        userName: null
+      })
+      //clean all of autoLogin
+      
+      
+      console.log(this.state)
     }
+
   }
 
   render() {
@@ -208,7 +217,7 @@ class App extends Component {
           logo={require('../../resources/logo.png')}
           title="My Shopping List"
           style={styles.toolbar}
-          actions={[{title: 'Edit your profile'},{title: 'Setting'}]}
+          actions={[{title: 'Setting'},{title: 'Log Off'}]}
           onActionSelected={this.onActionSelected}></ToolbarAndroid>
 
         <View style={styles.header}>
