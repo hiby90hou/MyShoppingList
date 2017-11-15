@@ -58,6 +58,44 @@ class Login extends Component {
     for(let i=0;i<userLog.length;i++){
       if(userLog[i].username==this.state.inputUserName && 
         userLog[i].password==this.state.inputPassword){
+
+        //if autoLogin switch is open,change the user Log and save it
+        if(this.state.autoLogin==true){
+          console.log("autoLogin is open")
+
+          //set all of the autoLogin to false
+          for(let j=0;j<userLog.length;j++){
+            userLog[j].autoLogin = false
+          } 
+          //set current autoLogin to true
+          userLog[i].autoLogin = true
+
+          //write file
+          // require the module
+          var RNFS = require('react-native-fs');
+
+          var saveStr = JSON.stringify(userLog)
+          // console.log(userLog);
+
+          // create a path you want to write to
+          const path = RNFS.ExternalDirectoryPath + '/MyShoppingList/userLog.json';
+
+          //make dir for this file
+          RNFS.mkdir(RNFS.ExternalDirectoryPath +'/MyShoppingList/')
+
+          // write the file
+          RNFS.writeFile(path, saveStr, 'utf8')
+            .then((success) => {
+              console.log('USERLOG FILE WRITTEN! Path:');
+              console.log(path);
+              // console.log(path);
+            })
+            .catch((err) => {
+              console.log(err.message);
+            });
+
+        }
+
         updateUserName(this.state.inputUserName)
         errorAlert = false
       }
@@ -74,6 +112,14 @@ class Login extends Component {
         { cancelable: false }
       )
     }
+
+    // const {updateUserName} = this.props
+    // if(correctUserName == this.state.inputUserName &&
+    //   correctPassword == this.state.inputPassword){
+    //     updateUserName(correctUserName)
+    // }else{
+
+    // }
 
     })
     .catch((err) => {
@@ -238,7 +284,10 @@ class Login extends Component {
               <TextInput underlineColorAndroid = "#b131d8" type="text" placeholder="Please input your password" secureTextEntry={true} onChangeText={this.handlePassword.bind(this)} ref={input => { this.pwInput = input }}/>
               <View style = {styles.rememberBox}>
                 <Text style={{color:"#ccc"}}>Auto Login</Text>
-                <Switch/>   
+                <Switch
+                onValueChange={(value) => this.setState({autoLogin: value})}
+                style={{marginBottom:10,marginTop:10}}
+                value={this.state.autoLogin} />  
               </View>
               <View style = {styles.gap}></View>
               <Button color='#b131d8' onPress = {this.loginCheck} title="Sign In"/>
