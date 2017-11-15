@@ -3,6 +3,8 @@ import { View, Text, Button, TextInput, Alert, StyleSheet, Switch, TouchableOpac
   ToastAndroid, } from 'react-native';
 import CheckPassword from '../checkPassword/index.js'
 import SignUp from '../signUp/'
+import CheckAutoLogin from '../checkAutoLogin/'
+
 import RNFS from 'react-native-fs';
 
 class Login extends Component {
@@ -100,8 +102,8 @@ class Login extends Component {
         errorAlert = false
       }
     }
-    // let correctUserName = 'hiby90hou';
-    // let correctPassword = 'hiby';
+
+
     if(errorAlert){
             Alert.alert(
         'Wrong Password',
@@ -112,14 +114,6 @@ class Login extends Component {
         { cancelable: false }
       )
     }
-
-    // const {updateUserName} = this.props
-    // if(correctUserName == this.state.inputUserName &&
-    //   correctPassword == this.state.inputPassword){
-    //     updateUserName(correctUserName)
-    // }else{
-
-    // }
 
     })
     .catch((err) => {
@@ -260,6 +254,10 @@ class Login extends Component {
         signUp: this.state.signUp
     }
 
+    const checkAutoLoginProps = {
+      updateUserName: this.props.updateUserName
+    }
+
     if(this.state.signUp){
       return(
         <SignUp {...signUpProps}/>
@@ -267,6 +265,7 @@ class Login extends Component {
     }else{
       return (
         <View>
+          <CheckAutoLogin {...checkAutoLoginProps}/>
           <View style = {styles.mainContainer}>
             <View style = {styles.nav}>
               <View style= {styles.button}/>
