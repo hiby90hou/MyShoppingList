@@ -6,8 +6,8 @@ import TodoFooter from '../TodoFooter/'
 import ReadFile from '../readFile/'
 import Network from '../network/'
 import Login from '../Login/'
+import MainNavBar from '../mainNavBar/'
 
-var ToolbarAndroid = require('ToolbarAndroid');
 
 class App extends Component {
 
@@ -19,7 +19,7 @@ class App extends Component {
       {isDone:false,title:'cake',expire:null}
       ],
       isAllDone:false,
-      userName: null,
+      userName: 'null',
       password: null,
       uploadTime: null
     }
@@ -61,6 +61,7 @@ class App extends Component {
     this.setState({
       userName:username
     })
+    console.log(this.state)
   }
 
   deleteTodo = (index) => {
@@ -118,32 +119,13 @@ class App extends Component {
     })
   }
 
-  onActionSelected=(position) => {
-    if (position === 0) {
-      alert("Setting")
-    }
-    if (position === 1) {
-      alert("Log Off")
-      console.log("Logoff")
-      this.setState({
-        userName: null
-      })
-      //clean all of autoLogin
-      
-      
-      console.log(this.state)
-    }
 
-  }
 
   render() {
 
+    console.log('render')
     // 定义style
     const styles = StyleSheet.create({
-      toolbar: {
-        backgroundColor: '#e9eaed',
-        height: 56
-      },
       header: {
         flex: 1,
         alignItems: 'center',
@@ -194,12 +176,17 @@ class App extends Component {
         initState:this.initState
       }
 
+    //定义MainNavBar标签的props
+    const mainNavBarProps = {
+      updateUserName:this.updateUserName
+    }
+
     //定义login标签的props
     const loginProps = {
         updateUserName:this.updateUserName
     }
 
-    if(this.state.userName==null){
+    if(this.state.userName=='null'){
       return(
         <View style={styles.loginContainer}>
           <Image
@@ -212,14 +199,7 @@ class App extends Component {
     }else{
       return (
         <ScrollView style={{flex: 1}}>
-
-          <ToolbarAndroid
-          logo={require('../../resources/logo.png')}
-          title="My Shopping List"
-          style={styles.toolbar}
-          actions={[{title: 'Setting'},{title: 'Log Off'}]}
-          onActionSelected={this.onActionSelected}></ToolbarAndroid>
-
+          <MainNavBar {...mainNavBarProps}/>
         <View style={styles.header}>
           <Text>Please enter your item name and press ✓</Text>
 
@@ -228,11 +208,7 @@ class App extends Component {
         
         <TodoMain {...mainProps}/>
         <TodoFooter {...footerProps}/>
-
-        {/*<Image source={require('../../resources/logo.png')} style={{width: 193, height: 110}} style={{flex: 1, alignItems: 'center'}}/>
-        <Network {...networkProps}/>
-      */}
-        <ReadFile {...readfileProps}/>
+        {/* <ReadFile {...readfileProps}/>*/}
         
 
         </ScrollView>

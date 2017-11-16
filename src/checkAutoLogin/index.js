@@ -13,7 +13,7 @@ componentWillMount() {
     const path = RNFS.ExternalDirectoryPath + '/MyShoppingList/userLog.json'
     RNFS.readFile(path)
     .then((statResult) => {
-      console.log(RNFS.exists(path))
+      // console.log(RNFS.exists(path))
       if (RNFS.exists(path)) {
         // if we have a file, read it
         return RNFS.readFile(path, 'utf8')
@@ -24,7 +24,7 @@ componentWillMount() {
     .then((contents) => {
       // log the file contents
       let userLog = JSON.parse(contents)
-      console.log(userLog)
+      // console.log(userLog)
       
 
       //check AutoLogin state

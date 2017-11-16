@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
 import { View, Text, Button, TextInput, Alert, StyleSheet, Switch, TouchableOpacity, Image,
   ToastAndroid, } from 'react-native';
-import CheckPassword from '../checkPassword/index.js'
 import SignUp from '../signUp/'
 import CheckAutoLogin from '../checkAutoLogin/'
 
@@ -127,7 +126,7 @@ class Login extends Component {
     this.setState({
       checkPassword:result
     })
-    console.log('checkPassword'+this.state.checkPassword);
+    // console.log('checkPassword'+this.state.checkPassword);
   }
 
   // change signUp state, if signup==true, open the signup page
@@ -265,7 +264,7 @@ class Login extends Component {
     }else{
       return (
         <View>
-          <CheckAutoLogin {...checkAutoLoginProps}/>
+          {/*<CheckAutoLogin {...checkAutoLoginProps}/>*/}
           <View style = {styles.mainContainer}>
             <View style = {styles.nav}>
               <View style= {styles.button}/>
@@ -295,7 +294,6 @@ class Login extends Component {
               </TouchableOpacity>
 
             </View>
-            {/*<CheckPassword {...checkPasswordProps}/>*/}
           </View>
           <Text style={styles.resetText}>Reset your password</Text>
         </View>
