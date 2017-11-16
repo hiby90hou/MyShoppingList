@@ -250,7 +250,8 @@ class Login extends Component {
     const signUpProps = {
         handleSignUp: this.handleSignUp,
         updateUserName: this.props.updateUserName,
-        signUp: this.state.signUp
+        signUp: this.state.signUp,
+        initState: this.props.initState
     }
 
     const checkAutoLoginProps = {

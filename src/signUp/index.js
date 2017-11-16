@@ -55,7 +55,6 @@ class signUp extends Component {
     .catch((err) => {
       console.log(err.message, err.code);
     });
-
     
   	//go back button setting
 	this.backButtonListener = BackHandler.addEventListener('hardwareBackPress',()=>{
@@ -95,7 +94,7 @@ class signUp extends Component {
 	
  
  	loginCheck = () =>{
- 		const {handleSignUp,updateUserName}= this.props
+ 		const {handleSignUp,updateUserName,initState}= this.props
 
  		checkArr = (username) => {
 			console.log("checkArr")
@@ -169,6 +168,16 @@ class signUp extends Component {
 			  });
 
 			//success signup
+			const newState = {
+				todos:[
+					{isDone:false,title:'meat',expire:null}
+				],
+				isAllDone: false,
+				password: null,
+				uploadTime: null
+			}
+
+			initState(newState)
 			handleSignUp()
 			updateUserName(this.state.inputUserName)
  		}

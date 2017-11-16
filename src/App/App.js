@@ -181,7 +181,8 @@ class App extends Component {
 
     //定义login标签的props
     const loginProps = {
-        updateUserName:this.updateUserName
+        updateUserName:this.updateUserName,
+        initState: this.initState
     }
 
     if(this.state.userName=='null'){
