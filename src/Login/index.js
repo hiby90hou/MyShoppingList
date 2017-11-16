@@ -265,7 +265,7 @@ class Login extends Component {
     }else{
       return (
         <View>
-          {/*<CheckAutoLogin {...checkAutoLoginProps}/>*/}
+          <CheckAutoLogin {...checkAutoLoginProps}/>
           <View style = {styles.mainContainer}>
             <View style = {styles.nav}>
               <View style= {styles.button}/>

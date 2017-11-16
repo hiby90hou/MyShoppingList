@@ -7,78 +7,78 @@ var ToolbarAndroid = require('ToolbarAndroid');
 class MainNavBar extends React.Component {
      onActionSelected=(position) => {
          const {updateUserName} = this.props
-        if (position === 1) {
-          console.log("updateUserName")
-          let emptyUserName = 'null'
-          updateUserName(emptyUserName)
+        if (position === 0) {
+          // console.log("updateUserName")
+          // let emptyUserName = 'null'
+          // updateUserName(emptyUserName)
         }
-  //       if (position === 1) {
-  //         alert("Log Off")
-  //         console.log("Logoff")
 
-  //         //clean all of autoLogin in userLog
+        if (position === 1) {
+            // alert("Log Off")
+            console.log("Logoff")
 
-  //         //Read file
-  //         // require the module
-  //         var RNFS = require('react-native-fs')
-  //         //create a path you want to read
-  //       const path = RNFS.ExternalDirectoryPath + '/MyShoppingList/userLog.json'
-  //       RNFS.readFile(path)
-  //       .then((statResult) => {
-  //         // console.log(RNFS.exists(path))
-  //         if (RNFS.exists(path)) {
-  //           // if we have a file, read it
-  //           return RNFS.readFile(path, 'utf8')
-  //         }
+            //clean all of autoLogin in userLog
 
-  //         return 'no file'
-  //       })
-  //       .then((contents) => {
-  //         // log the file contents
-  //         let userLog = JSON.parse(contents)
-  //         // console.log(userLog)
+            //Read file
+            // require the module
+            var RNFS = require('react-native-fs')
+            //create a path you want to read
+           const path = RNFS.ExternalDirectoryPath + '/MyShoppingList/userLog.json'
+
+            RNFS.readFile(path)
+            .then((statResult) => {
+            // console.log(RNFS.exists(path))
+            if (RNFS.exists(path)) {
+            // if we have a file, read it
+            return RNFS.readFile(path, 'utf8')
+          }
+
+          return 'no file'
+        })
+        .then((contents) => {
+          // log the file contents
+          let userLog = JSON.parse(contents)
+          // console.log(userLog)
           
 
-  //         //check AutoLogin state
-  //         for(let i=0; i<userLog.length; i++){
-  //           userLog[i].autoLogin=false;
-  //         }
+          //change every AutoLogin state to false
+          for(let i=0; i<userLog.length; i++){
+            userLog[i].autoLogin=false;
+          }
 
-  //         //write file
-  //         // require the module
-  //         var RNFS = require('react-native-fs')
-  //         var saveStr = JSON.stringify(userLog)
-  //         // console.log(userLog);
+          //write file
+          // require the module
+          var RNFS = require('react-native-fs')
+          var saveStr = JSON.stringify(userLog)
+          // console.log(userLog);
 
-  //         // create a path you want to write to
-  //         const path = RNFS.ExternalDirectoryPath + '/MyShoppingList/userLog.json';
+          // create a path you want to write to
+          const path = RNFS.ExternalDirectoryPath + '/MyShoppingList/userLog.json';
 
-  //         //make dir for this file
-  //         RNFS.mkdir(RNFS.ExternalDirectoryPath +'/MyShoppingList/')
+          //make dir for this file
+          RNFS.mkdir(RNFS.ExternalDirectoryPath +'/MyShoppingList/')
 
-  //         // write the file
-  //         RNFS.writeFile(path, saveStr, 'utf8')
-  //           .then((success) => {
-  //             console.log('USERLOG FILE WRITTEN! Path:');
-  //             console.log(path);
-  //             // console.log(path);
-  //               console.log('updateUserName');
-  //             updateUserName('hiby')
-  //           })
-  //           .catch((err) => {
-  //             console.log(err.message);
-  //           });
+          // write the file
+          RNFS.writeFile(path, saveStr, 'utf8')
+            .then((success) => {
+              console.log('USERLOG FILE WRITTEN! Path:');
+              console.log(path);
 
-
-  //       })
-  //       .catch((err) => {
-  //         console.log(err.message, err.code);
-  //       });
+              // go back to login page
+                console.log("updateUserName")
+                let emptyUserName = 'null'
+                updateUserName(emptyUserName)
+            })
+            .catch((err) => {
+              console.log(err.message);
+            });
 
 
-          
-          
-  //       }
+        })
+        .catch((err) => {
+          console.log(err.message, err.code);
+        }); 
+        }
 
   }
     render() {

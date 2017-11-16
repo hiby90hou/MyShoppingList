@@ -33,7 +33,7 @@ componentWillMount() {
         if(userLog[i].autoLogin){
           //success signup
           console.log('autoLogin success')
-          // updateUserName(userLog[i].username)
+          updateUserName(userLog[i].username)
         }
       }
 
