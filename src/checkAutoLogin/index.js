@@ -6,6 +6,7 @@ class checkAutoLogin extends Component {
 componentWillMount() {
   const {updateUserName} = this.props
   //read file
+  console.log("readFile AutoLogin")
   // require the module
   var RNFS = require('react-native-fs')
 

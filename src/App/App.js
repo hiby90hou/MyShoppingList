@@ -39,18 +39,16 @@ class App extends Component {
     })
   }
 
-  // update state
+  // update state for readfile and network
   initState = (newState) =>{
     const todos = newState.todos
     const isAllDone = newState.isAllDone
-    const userName = newState.userName
     const password = newState.password
     const uploadTime = newState.uploadTime
 
     this.setState({
       todos,
       isAllDone,
-      userName,
       password,
       uploadTime
     })
@@ -208,7 +206,7 @@ class App extends Component {
         
         <TodoMain {...mainProps}/>
         <TodoFooter {...footerProps}/>
-        {/* <ReadFile {...readfileProps}/>*/}
+        <ReadFile {...readfileProps}/>
         
 
         </ScrollView>
