@@ -209,7 +209,7 @@ class App extends Component {
         <TodoMain {...mainProps}/>
         <TodoFooter {...footerProps}/>
         <ReadFile {...readfileProps}/>
-        <BarCodeScanner/>
+        <BarCodeScanner />
 
         </ScrollView>
       );
