@@ -7,6 +7,7 @@ import ReadFile from '../readFile/'
 import Network from '../network/'
 import Login from '../Login/'
 import MainNavBar from '../mainNavBar/'
+import BarCodeScanner from '../barCodeScanner/'
 
 
 class App extends Component {
@@ -208,7 +209,7 @@ class App extends Component {
         <TodoMain {...mainProps}/>
         <TodoFooter {...footerProps}/>
         <ReadFile {...readfileProps}/>
-        
+        <BarCodeScanner/>
 
         </ScrollView>
       );
