@@ -35,6 +35,12 @@ class barCodeScanner extends Component {
 
     // defined style
     const styles = StyleSheet.create({
+      container: {
+        position: 'absolute',
+        width: '100%',
+        height: '100%',
+        backgroundColor: 'blue',
+      },
       cameraBox:{
         position: 'absolute',
         bottom:30,
@@ -47,7 +53,7 @@ class barCodeScanner extends Component {
 
       if(this.state.showCamera){
         return(
-          <CameraComponent {...cameraComponentProps}/>
+          <CameraComponent style={styles.container} {...cameraComponentProps}/>
         )
       }
 

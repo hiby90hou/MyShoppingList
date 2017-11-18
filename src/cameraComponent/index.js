@@ -24,6 +24,15 @@ class cameraComponent extends Component {
         .catch(err => console.error(err));
     }
 
+    onBarCodeRead = (result) => {
+        const {changeCameraState} = this.props
+        // const {qrCodeRead} = this.props.route;
+        const {data} = result;
+        // qrCodeRead && qrCodeRead(data);
+        alert('BarCodeRead:'+result.data)
+        changeCameraState()
+    };
+
   render() {
 
     // defined style
@@ -53,19 +62,51 @@ class cameraComponent extends Component {
         position: 'absolute',
         bottom:30,
         right:30
-      }
+      },
+      preview: {
+        flex: 1,
+        justifyContent: 'flex-end',
+        alignItems: 'center'
+      },
+      rectangleContainer: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: 'transparent'
+        },
+        rectangle: {
+            height: 200,
+            width: 200,
+            borderWidth: 1,
+            borderColor: '#00FF00',
+            backgroundColor: 'transparent'
+        },
+        rectangleText: {
+            flex: 0,
+            color: '#fff',
+            marginTop: 10
+        }
     })
 
 
         return(
           <View style={styles.container}>
-            <Camera
+            <Camera 
+              onBarCodeRead={this.onBarCodeRead}
+              defaultOnFocusComponent={true}
+
               ref={(cam) => {
                 this.camera = cam;
               }}
               style={styles.preview}
               aspect={Camera.constants.Aspect.fill}>
-              <Text style={styles.capture} onPress={this.takePicture.bind(this)}>[CAPTURE]</Text>
+              <View style={styles.rectangleContainer}>
+                  <View style={styles.rectangle}/>
+
+                  <Text style={styles.rectangleText}>put your bar code into this rectangle</Text>
+                  <Text style={styles.capture} onPress={this.takePicture.bind(this)}>[CAPTURE]</Text>
+              </View>
+              
             </Camera>
           </View>
         )
