@@ -198,20 +198,23 @@ class App extends Component {
         )
     }else{
       return (
-        <ScrollView style={{flex: 1}}>
-          <MainNavBar {...mainNavBarProps}/>
-        <View style={styles.header}>
-          <Text>Please enter your item name and press ✓</Text>
+        <View style={{flex: 1}}>
+          
+          <ScrollView style={{flex: 1}}>
+            <MainNavBar {...mainNavBarProps}/>
+            <View style={styles.header}>
+              <Text>Please enter your item name and press ✓</Text>
 
-          <TodoHeader addTodo={this.addTodo}/>
+              <TodoHeader addTodo={this.addTodo}/>
+            </View>
+          
+          <TodoMain {...mainProps}/>
+          <TodoFooter {...footerProps}/>
+          <ReadFile {...readfileProps}/>
+          </ScrollView>
+
+          <BarCodeScanner style={{position: 'absolute'}} />
         </View>
-        
-        <TodoMain {...mainProps}/>
-        <TodoFooter {...footerProps}/>
-        <ReadFile {...readfileProps}/>
-        <BarCodeScanner />
-
-        </ScrollView>
       );
     }
   }
