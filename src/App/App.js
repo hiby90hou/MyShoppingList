@@ -23,7 +23,7 @@ class App extends Component {
       userName: 'null',
       password: null,
       uploadTime: null,
-      barCode:''
+      barCode:'null'
     }
   }
 
@@ -66,9 +66,13 @@ class App extends Component {
 
   //Set barCode
   barCodeSetter = (newBarCode) =>{
+    const barCode = newBarCode
     this.setState({
-      barCode:newBarCode
+      barCode
     })
+    this.forceUpdate()
+    // console.log('barCodeSetter')
+    // console.log(this.state)
   }
 
   deleteTodo = (index) => {
@@ -130,7 +134,10 @@ class App extends Component {
 
   render() {
 
+
+
     console.log('render')
+    console.log(this.state)
     // 定义style
     const styles = StyleSheet.create({
       header: {
@@ -162,36 +169,48 @@ class App extends Component {
       deleteTodo:this.deleteTodo
     }
 
-    // //定义footer标签的props
-      const footerProps = {
+     //定义footer标签的props
+    const footerProps = {
         totalCount: this.state.todos.length,
         doneCount:this.state.todos.filter(todo => todo.isDone).length,
         deleteExpireItem:this.deleteExpireItem,
         isAllDone:this.state.isAllDone,
         changeAllChecked: this.changeAllChecked
 
-      }
-    //定义readfile标签的props
-      const readfileProps = {
+    }
+
+    //defined readfile props
+    const readfileProps = {
         state: this.state,
         initState:this.initState
       }
 
-    //定义network标签的props
+    //defined TodoHeader props
+    const todoHeaderProps = {
+      barCode:this.state.barCode,
+      barCodeSetter:this.barCodeSetter
+    }
+
+    //defined network props
     const networkProps = {
         state: this.state,
         initState:this.initState
       }
 
-    //定义MainNavBar标签的props
+    //defined MainNavBar props
     const mainNavBarProps = {
       updateUserName:this.updateUserName
     }
 
-    //定义login标签的props
+    //defined login props
     const loginProps = {
-        updateUserName:this.updateUserName,
-        initState: this.initState
+      updateUserName:this.updateUserName,
+      initState: this.initState
+    }
+
+    //defined barcode props
+    const barcodeProps = {
+      barCodeSetter:this.barCodeSetter
     }
 
     if(this.state.userName=='null'){
@@ -206,14 +225,15 @@ class App extends Component {
         )
     }else{
       return (
+
         <View style={{flex: 1}}>
           
           <ScrollView style={{flex: 1}}>
             <MainNavBar {...mainNavBarProps}/>
             <View style={styles.header}>
-              <Text>Please enter your item name and press ✓</Text>
+              <Text>Please enter your item name and press enter</Text>
 
-              <TodoHeader addTodo={this.addTodo}/>
+              <TodoHeader addTodo={this.addTodo} {...todoHeaderProps}/>
             </View>
           
           <TodoMain {...mainProps}/>
@@ -221,7 +241,7 @@ class App extends Component {
           <ReadFile {...readfileProps}/>
           </ScrollView>
 
-          <BarCodeScanner style={{position: 'absolute'}} />
+          <BarCodeScanner style={{position: 'absolute'}} {...barcodeProps}/>
         </View>
       );
     }

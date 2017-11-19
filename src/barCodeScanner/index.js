@@ -50,7 +50,8 @@ class barCodeScanner extends Component {
       }
     })
     const cameraComponentProps = {
-      changeCameraState: this.changeCameraState
+      changeCameraState: this.changeCameraState,
+      barCodeSetter:this.props.barCodeSetter
     }
 
       if(this.state.showCamera){

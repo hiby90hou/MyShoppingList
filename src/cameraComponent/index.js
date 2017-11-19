@@ -22,21 +22,23 @@ class cameraComponent extends Component {
     }
 
   takePicture = () => {
-    const {changeCameraState} = this.props
+    const {changeCameraState,barCodeSetter} = this.props
       const options = {};
       //options.location = ...
       this.camera.capture({metadata: options})
         .then((data) => console.log(data))
+        .then(barCodeSetter("data arrived"))
         .then(changeCameraState)
         .catch(err => console.error(err));
     }
 
     onBarCodeRead = (result) => {
-        const {changeCameraState} = this.props
+        const {changeCameraState,barCodeSetter} = this.props
         // const {qrCodeRead} = this.props.route;
         const {data} = result;
         // qrCodeRead && qrCodeRead(data);
         alert('BarCodeRead:'+result.data)
+        barCodeSetter(result.data)
         changeCameraState()
     }
 

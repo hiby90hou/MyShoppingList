@@ -10,6 +10,7 @@ class TodoHeader extends Component {
     super(props);
     this.state = {times:0, text: ''}
   }
+
   timePlus(){
     let times = this.state.times
     times++
@@ -19,7 +20,9 @@ class TodoHeader extends Component {
     })
   }
 
-  handleChange = (text) => { return this.setState({text})}
+  handleChange = (text) => { 
+    return this.setState({text})
+  }
 
   handleEnter = (text) =>{ 
     if(this.state.text==""){
@@ -41,8 +44,52 @@ class TodoHeader extends Component {
       text:''
     })
 
-    //清空input
+    //clean input
     this.textInput.clear()
+  }
+
+ //when set state, check barcode. if barcode has data, update this.text
+  componentDidUpdate(){
+    const {barCode, barCodeSetter} = this.props
+    if(barCode != 'null'){
+      let text = barCode
+
+      const self=this
+
+      const queryURL = 'http://ali-barcode.showapi.com/barcode?code=6938166920785';
+
+  fetch(queryURL, {
+    method: 'GET',
+    headers: {
+      "Content-Type":"application/json; charset=utf-8",
+      "Authorization":"APPCODE 829b57a60afb4b368617f2b64dea1031"
+    }
+  })
+  .then((response) => response.json() )
+  .then((responseData) => {
+    if (responseData) {
+      // 接到 Data
+      console.log(responseData);
+      text = responseData.showapi_res_body.goodsName
+
+      console.log(text)
+      // set goods name in text
+      self.setState({
+        text
+      })
+      
+
+      //clean barCode
+      barCodeSetter('null')
+    } 
+
+  })
+  .catch((error) => {
+    console.warn(error);
+  })
+ 
+
+    }
   }
   
   render() {
@@ -88,7 +135,7 @@ class TodoHeader extends Component {
     return (
         <View className = "todo-header" style={styles.todoHeader} >
           <View style={styles.inputBoxContainer}>
-            <TextInput style={styles.inputBox} underlineColorAndroid = "#b131d8" type="text" placeholder=" Item name + Enter" onChangeText={this.handleChange.bind(this)} onEndEditing={this.handleEnter.bind(this)} ref={input => { this.textInput = input }}/>
+            <TextInput value={this.state.text} style={styles.inputBox} underlineColorAndroid = "#b131d8" type="text" placeholder=" Item name + Enter" onChangeText={this.handleChange.bind(this)} onEndEditing={this.handleEnter.bind(this)} ref={input => { this.textInput = input }}/>
             
           </View>
           <TouchableOpacity style={styles.inputButton} onPress={this.handleEnter.bind(this)}>
