@@ -31,6 +31,8 @@ class barCodeScanner extends Component {
   }
 
 
+
+
   render() {
 
     // defined style

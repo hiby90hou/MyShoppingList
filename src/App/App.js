@@ -22,7 +22,8 @@ class App extends Component {
       isAllDone:false,
       userName: 'null',
       password: null,
-      uploadTime: null
+      uploadTime: null,
+      barCode:''
     }
   }
 
@@ -61,6 +62,13 @@ class App extends Component {
       userName:username
     })
     console.log(this.state)
+  }
+
+  //Set barCode
+  barCodeSetter = (newBarCode) =>{
+    this.setState({
+      barCode:newBarCode
+    })
   }
 
   deleteTodo = (index) => {
