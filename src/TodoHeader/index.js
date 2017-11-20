@@ -54,42 +54,50 @@ class TodoHeader extends Component {
     if(barCode != 'null'){
       let text = barCode
 
-      const self=this
+  //     const self=this
 
-      const queryURL = 'http://ali-barcode.showapi.com/barcode?code=6938166920785';
+  //     const queryURL = 'http://ali-barcode.showapi.com/barcode?code=6938166920785';
 
-  fetch(queryURL, {
-    method: 'GET',
-    headers: {
-      "Content-Type":"application/json; charset=utf-8",
-      "Authorization":"APPCODE 829b57a60afb4b368617f2b64dea1031"
-    }
-  })
-  .then((response) => response.json() )
-  .then((responseData) => {
-    if (responseData) {
-      // 接到 Data
-      console.log(responseData);
-      text = responseData.showapi_res_body.goodsName
+  // fetch(queryURL, {
+  //   method: 'GET',
+  //   headers: {
+  //     "Content-Type":"application/json; charset=utf-8",
+  //     "Authorization":"APPCODE 829b57a60afb4b368617f2b64dea1031"
+  //   }
+  // })
+  // .then((response) => response.json() )
+  // .then((responseData) => {
+  //   if (responseData) {
+  //     // 接到 Data
+  //     console.log(responseData);
+  //     text = responseData.showapi_res_body.goodsName
 
-      console.log(text)
-      // set goods name in text
-      self.setState({
-        text
-      })
+  //     console.log(text)
+  //     // set goods name in text
+  //     self.setState({
+  //       text
+  //     })
       
 
+  //     //clean barCode
+  //     barCodeSetter('null')
+  //   } 
+
+  // })
+  // .catch((error) => {
+  //   console.warn(error);
+  // })
+
+      if(text=='8000500003787'){
+        text = 'Ferrero'
+      }
+  
+      this.setState({
+        text
+      })
       //clean barCode
-      barCodeSetter('null')
-    } 
-
-  })
-  .catch((error) => {
-    console.warn(error);
-  })
- 
-
-    }
+       barCodeSetter('null')
+  }  
   }
   
   render() {
