@@ -8,7 +8,9 @@ import {
   TouchableHighlight,
   Button,
   Animated,
-  Easing
+  Easing,
+  BackHandler,
+  ToastAndroid,
 } from 'react-native';
 
  import Camera from 'react-native-camera';
@@ -57,6 +59,30 @@ class cameraComponent extends Component {
                 easing: Easing.linear
             }//end
         ).start(() => this.startAnimation())//start
+    }
+
+    //set the go back button
+    componentWillMount(){
+          //go back button setting
+      this.backButtonListener = BackHandler.addEventListener('hardwareBackPress',()=>{
+        const {changeCameraState} = this.props
+        // console.log(this.props);
+         if(this.state.userName!='null'){
+          console.log('userName goback');
+            ToastAndroid.show('Camera close',ToastAndroid.SHORT);
+            changeCameraState()
+            return true
+         }
+        return false
+      })
+    }
+
+    // when go out from this page, run componentWillUnmount
+    componentWillUnmount(){
+
+      // BackHandler.removeEventListener('hardwareBackPress',()=>{});
+      this.backButtonListener.remove();
+      console.log('componentWillUnmount');
     }
 
 

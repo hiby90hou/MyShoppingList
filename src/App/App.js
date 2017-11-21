@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, AppRegistry, Image, ScrollView,StyleSheet} from 'react-native';
+import { View, Text, AppRegistry, Image, ScrollView,StyleSheet,BackHandler,ToastAndroid,} from 'react-native';
 import TodoHeader from '../TodoHeader/'
 import TodoMain from '../TodoMain/'
 import TodoFooter from '../TodoFooter/'
@@ -109,7 +109,7 @@ class App extends Component {
     })
   }
 
-  // //更新指定todo的isDone值
+  // //update todo's isDone value
   updateTodoChecked = () =>{
     const todos = this.state.todos;
     const isAllDone = this.state.todos.filter(todo => !todo.isDone); 
@@ -119,9 +119,9 @@ class App extends Component {
     })
   }
 
-  //设置所有todos的选中状态
+  //setting all of todos's selected state
   changeAllChecked = (isAllDone) =>{
-    //更新todos中所有TODO的状态
+    //update all the TODO's state in todos
     const todos = this.state.todos;
     todos.forEach(todo =>{todo.isDone = isAllDone;})
     this.setState({
@@ -129,6 +129,21 @@ class App extends Component {
       todos
     })
   }
+
+//set the go back button
+componentWillMount(){
+      //go back button setting
+  this.backButtonListener = BackHandler.addEventListener('hardwareBackPress',()=>{
+    // console.log(this.props);
+     if(this.state.userName!='null'){
+      console.log('userName goback');
+        ToastAndroid.show('Go back to Sign in Page',ToastAndroid.SHORT);
+        this.updateUserName('null')
+        return true
+     }
+    return false
+  })
+}
 
 
 
@@ -138,7 +153,7 @@ class App extends Component {
 
     console.log('render')
     console.log(this.state)
-    // 定义style
+    // defined style
     const styles = StyleSheet.create({
       header: {
         flex: 1,
@@ -162,14 +177,14 @@ class App extends Component {
       }
     })
 
-    // //定义main标签的props
+    //defined main props
     const mainProps = {
       todos: this.state.todos,
       updateTodoChecked:this.updateTodoChecked,
       deleteTodo:this.deleteTodo
     }
 
-     //定义footer标签的props
+     //defined footer props
     const footerProps = {
         totalCount: this.state.todos.length,
         doneCount:this.state.todos.filter(todo => todo.isDone).length,
