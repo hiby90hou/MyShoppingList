@@ -6,7 +6,7 @@ import {
   AppRegistry,
   Dimensions,
   TouchableHighlight,
-  Button
+  TouchableOpacity
 } from 'react-native';
 
  import CameraComponent from '../cameraComponent/'
@@ -45,8 +45,21 @@ class barCodeScanner extends Component {
       },
       cameraBox:{
         position: 'absolute',
-        bottom:30,
-        right:30
+        bottom:60,
+        right:40
+      },
+      buttonCamera:{
+        width:70,
+        height: 70,
+        backgroundColor: '#e4d4f9',
+        borderRadius: 70,
+        alignItems: 'center',
+        justifyContent:'center'
+      },
+      buttonTitle:{
+        color:'white',
+        fontSize: 70,
+        marginBottom: 5,
       }
     })
     const cameraComponentProps = {
@@ -63,7 +76,9 @@ class barCodeScanner extends Component {
       else{
           return(
           <View style={styles.cameraBox}>
-            <Button onPress={this.changeCameraState} title='Camera'></Button>
+            <TouchableOpacity onPress={this.changeCameraState} style={styles.buttonCamera}>
+              <Text style={styles.buttonTitle}>+</Text>
+            </TouchableOpacity>
           </View>
         )
       }

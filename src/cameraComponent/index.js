@@ -153,6 +153,7 @@ class cameraComponent extends Component {
             <Camera 
               onBarCodeRead={this.onBarCodeRead}
               defaultOnFocusComponent={true}
+              torchMode={Camera.constants.TorchMode.on}
 
               ref={(cam) => {
                 this.camera = cam;
@@ -164,8 +165,9 @@ class cameraComponent extends Component {
                   <Animated.View style={[
                       styles.border,
                       {transform: [{translateY: this.state.moveAnim}]}]}/>
-                  <Text style={styles.rectangleText}>put your bar code into this rectangle</Text>
-                  <Text style={styles.capture} onPress={this.takePicture.bind(this)}>[CAPTURE]</Text>
+                  <Text style={styles.rectangleText}>Please put your bar code into this rectangle</Text>
+                  <Text style={styles.rectangleText}>We will try to find out item name for you</Text>
+                  {/*<Text style={styles.capture} onPress={this.takePicture.bind(this)}>[CAPTURE]</Text>*/}
               </View>
               
             </Camera>
