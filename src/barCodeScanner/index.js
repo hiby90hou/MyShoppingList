@@ -6,7 +6,8 @@ import {
   AppRegistry,
   Dimensions,
   TouchableHighlight,
-  TouchableOpacity
+  TouchableOpacity,
+  Modal
 } from 'react-native';
 
  import CameraComponent from '../cameraComponent/'
@@ -67,21 +68,25 @@ class barCodeScanner extends Component {
       barCodeSetter:this.props.barCodeSetter
     }
 
-      if(this.state.showCamera){
-        return(
-          <CameraComponent style={styles.container} {...cameraComponentProps}/>
-        )
-      }
 
-      else{
-          return(
-          <View style={styles.cameraBox}>
-            <TouchableOpacity onPress={this.changeCameraState} style={styles.buttonCamera}>
-              <Text style={styles.buttonTitle}>+</Text>
-            </TouchableOpacity>
+        return(
+          <View>
+            <Modal
+            animationType="slide"
+            transparent={false}
+            visible={this.state.showCamera}
+            onRequestClose={() => {console.log("Modal has been closed."); this.changeCameraState();}}
+            >
+              <CameraComponent style={styles.container} {...cameraComponentProps}/>
+            </Modal>
+            <View style={styles.cameraBox}>
+              <TouchableOpacity onPress={this.changeCameraState} style={styles.buttonCamera}>
+                <Text style={styles.buttonTitle}>+</Text>
+              </TouchableOpacity>
+            </View>
           </View>
         )
-      }
+
 
   }
 }
