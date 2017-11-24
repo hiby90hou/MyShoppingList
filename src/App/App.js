@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, AppRegistry, Image, ScrollView,StyleSheet,BackHandler,ToastAndroid,} from 'react-native';
+import { View, Text, AppRegistry, Image, ScrollView,StyleSheet,BackHandler,ToastAndroid} from 'react-native';
 import TodoHeader from '../TodoHeader/'
 import TodoMain from '../TodoMain/'
 import TodoFooter from '../TodoFooter/'
@@ -132,19 +132,38 @@ class App extends Component {
 
 //set the go back button
 componentWillMount(){
+  let firstClick = 0
       //go back button setting
   this.backButtonListener = BackHandler.addEventListener('hardwareBackPress',()=>{
     // console.log(this.props);
-     if(this.state.userName!='null'){
+     if(this.state.userName=='default'){
       console.log('userName goback');
-        ToastAndroid.show('Go back to Sign in Page',ToastAndroid.SHORT);
-        this.updateUserName('null')
-        return true
+      ToastAndroid.show('Go back to Sign in Page',ToastAndroid.SHORT);
+      this.updateUserName('null')
+      return true
+     }
+     else if(this.state.userName!='null'){
+
+      let timestamp = (new Date()).valueOf()
+      if(timestamp-firstClick>2000){
+        firstClick = timestamp;
+        ToastAndroid.show('Press back 2 times to exit',ToastAndroid.SHORT);
+        console.log('Press back 2 times to exit')
+        return true;
+      }else{
+        return false
+      } 
      }
     return false
   })
 }
 
+componentWillUnmount(){
+
+      // BackHandler.removeEventListener('hardwareBackPress',()=>{});
+      this.backButtonListener.remove();
+      console.log('componentWillUnmount');
+    }
 
 
   render() {
