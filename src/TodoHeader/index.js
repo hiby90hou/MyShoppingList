@@ -97,7 +97,7 @@ class TodoHeader extends Component {
       })
       //clean barCode
        barCodeSetter('null')
-  }  
+    }  
   }
   
   render() {
