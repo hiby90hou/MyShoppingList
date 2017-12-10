@@ -2,12 +2,12 @@ class Api::V1::UsersController < ApplicationController
 	before_action :set_user
 
 	def show
-		render json:{
-			id: @user.id,
-			username: @user.username,
-			password: @user.password,
-			todos: @user.todoings.first.todos
-		}
+		# render json:{
+		# 	id: @user.id,
+		# 	username: @user.username,
+		# 	password: @user.password,
+		# 	todos: @user.todoings.first.todos
+		# }
 	end
 
 	private
