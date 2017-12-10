@@ -1,8 +1,6 @@
 # MyShoppingList - an React-native based apk project
 ## Making cool App with React Native and have fun!
-
-## Hi, I want to create an shopping list app in android
-## this app can help me to remember food expire date and reduce food waste
+### this app can help me to remember food expire date and reduce food waste
 
 ## 1. Who I am?
    1. GA WDI student, PM background
