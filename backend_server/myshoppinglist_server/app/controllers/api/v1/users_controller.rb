@@ -5,13 +5,14 @@ class Api::V1::UsersController < ApplicationController
 		render json:{
 			id: @user.id,
 			username: @user.username,
-			password: @user.password
+			password: @user.password,
+			todos: @user.todoings.first.todos
 		}
 	end
 
 	private
 
 		def set_user
-			@user = User.find(params[:id])
+			@user = User.find_by_username(params[:id])
 		end
 	end

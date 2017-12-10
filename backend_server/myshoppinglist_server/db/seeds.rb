@@ -7,7 +7,8 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 u = User.create(username: "hiby" , password: "123" )
 
-u.todoings.create(todos: "{isDone:false,title:'cake',expire:null}")
-u.todoings.create(todos: "{isDone:false,title:'milk',expire:null}")
-u.todoings.create(todos: "{isDone:false,title:'coke',expire:null}")
-u.todoings.create(todos: "{isDone:false,title:'meat',expire:null}")
+u.todoings.create(todos: "[{isDone:false,title:'cake',expire:null},
+						   {isDone:false,title:'milk',expire:null},
+						   {isDone:false,title:'coke',expire:null},
+						   {isDone:false,title:'meat',expire:null}]
+							")
