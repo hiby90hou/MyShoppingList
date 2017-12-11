@@ -58,4 +58,7 @@
           b. bar-code API
           (react-native camera)
       2.7 Create a ruby backend server
-          working on it...
+          working on it...
+## 5.Issues
+    ###1. The password of ruby server is not working
+    ###2. Need a recommend food list
