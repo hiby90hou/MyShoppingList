@@ -38,10 +38,14 @@ module Api
 
 			def update
 				user = User.find_by_user_name(params[:id])
-				if user.update_attributes(user_params)
-					render json: {status: 'SUCCESS', message:'Updated shoppinglist', data:user},status: :ok
+				if user
+					if user.update_attributes(user_params)
+						render json: {status: 'SUCCESS', message:'Updated shoppinglist', data:user},status: :ok
+					else
+						render json: {status: 'ERROR', message:'shoppinglist not updated', data:user.errors},status: :ok
+					end
 				else
-					render json: {status: 'ERROR', message:'shoppinglist not updated', data:user.errors},status: :ok
+					render json: {status: 'ERROR', message:'shoppinglist not updated', data:"cannot find user name"},status: :ok
 				end
 			end
 
