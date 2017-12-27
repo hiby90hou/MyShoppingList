@@ -7,8 +7,12 @@ module Api
 			end
 
 			def show
-				user = User.friendly.find(params[:id])
-				render json: {status: 'SUCCESS', message:'Loaded shoppinglist', data:user},status: :ok
+				user = User.find_by_user_name(params[:id])
+				if user
+					render json: {status: 'SUCCESS', message:'Loaded shoppinglist', data:user},status: :ok
+				else
+					render json: {status: 'ERROR', message:'shoppinglist cannot find', data:"error"},status: :unprocessable_entity	
+				end
 			end
 
 			def create
@@ -17,26 +21,31 @@ module Api
 				if user.save
 					render json: {status: 'SUCCESS', message:'Saved shoppinglist', data:user},status: :ok
  				else
-					render json: {status: 'ERROR', message:'shoppinglist not saved', data:user.error},status: :unprocessable_entity
+					render json: {status: 'ERROR', message:'shoppinglist not saved', data:user.errors},status: :unprocessable_entity
  				end
 			end
 
 			def destroy
-				user = User.find(params[:user_name])
-				# user.destroy
-				render json: {status: 'SUCCESS', message:'Deleted shoppinglist', data:user}, status: :ok
+				user = User.find_by_user_name(params[:id])
+				if user
+					user.destroy
+					render json: {status: 'SUCCESS', message:'Deleted shoppinglist', data:user}, status: :ok
+				else
+					render json: {status: 'ERROR', message:'shoppinglist cannot find', data:"cannot find shopping list, so I cannot delete it."},status: :unprocessable_entity	
+
+				end
 			end
 
-			# def update
-			# 	article = Article.find(params[:id])
-			# 	if article.update_attributes(article_params)
-			# 		render json: {status: 'SUCCESS', message:'Updated article', data:article},status: :ok
-			# 	else
-			# 		render json: {status: 'ERROR', message:'Article not updated', data:article.errors},status: :ok
-			# 	end
-			# end
+			def update
+				user = User.find_by_user_name(params[:id])
+				if user.update_attributes(user_params)
+					render json: {status: 'SUCCESS', message:'Updated shoppinglist', data:user},status: :ok
+				else
+					render json: {status: 'ERROR', message:'shoppinglist not updated', data:user.errors},status: :ok
+				end
+			end
 
-			# private
+			private
 
 			def user_params
 				params.permit(:todos, :is_all_done, :user_name, :password)
