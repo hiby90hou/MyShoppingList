@@ -5,10 +5,11 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-u = User.create(username: "hiby" , password: "123" )
-
-u.todoings.create(todos: "[{isDone:false,title:'cake',expire:null},
-						   {isDone:false,title:'milk',expire:null},
-						   {isDone:false,title:'coke',expire:null},
-						   {isDone:false,title:'meat',expire:null}]
-							")
+5.times do
+	User.create({
+		todos:"[{is_done:false,title:'#{Faker::Food.dish}',expire:null},{is_done:false,title:'#{Faker::Food.dish}',expire:null},{is_done:false,title:'#{Faker::Food.dish}',expire:null}]",
+		is_all_done: "false",
+		user_name: "#{Faker::Friends.character}",
+		password:"12345"
+	})
+end

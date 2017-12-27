@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  todos: MyString
+  is_all_done: false
+  user_name: MyString
+  password: MyString
+
+two:
+  todos: MyString
+  is_all_done: false
+  user_name: MyString
+  password: MyString
