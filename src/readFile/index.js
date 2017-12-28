@@ -3,33 +3,36 @@ import { View, Text,Button, TextInput } from 'react-native';
 import RNFS from 'react-native-fs';
 
 class readFile extends Component {
-componentWillMount() {
+async componentWillMount() {
   const {state, initState} = this.props
   //read file
   // require the module
   var RNFS = require('react-native-fs');
-  // console.log(RNFS.ExternalDirectoryPath+'/MyShoppingList/');
 
-  // get a list of files and directories in the main bundle
-  // RNFS.readDir(RNFS.ExternalDirectoryPath+'/MyShoppingList/') // On Android, use "RNFS.DocumentDirectoryPath" (MainBundlePath is not defined)
-    // .then((result) => {
-    //   console.log('GOT RESULT', result);
+  //check server, if has this user name, get user data from server
+  try {
+    let response = await fetch(
+      'http://192.168.1.5:3000/api/v1/users/'+state.userName
+    );
+    let responseJson = await response.json();
+    // return responseJson.movies;
+    console.log(responseJson)
+  } catch (error) {
+    console.error(error);
+  }
 
-    //   // stat the 1st file
-    //   return Promise.all([RNFS.stat(result[0].path), result[0].path]);
-    // })
 
-    //create a path you want to read
-    const path = RNFS.ExternalDirectoryPath + '/MyShoppingList/'+state.userName+'shoppingListData.json';
-    RNFS.readFile(path)
-    .then((statResult) => {
-      console.log(RNFS.exists(path));
-      if (RNFS.exists(path)) {
-        // if we have a file, read it
-        return RNFS.readFile(path, 'utf8');
-      }
+  //create a path you want to read
+  const path = RNFS.ExternalDirectoryPath + '/MyShoppingList/'+state.userName+'shoppingListData.json';
+  RNFS.readFile(path)
+  .then((statResult) => {
+    console.log(RNFS.exists(path));
+    if (RNFS.exists(path)) {
+      // if we have a file, read it
+      return RNFS.readFile(path, 'utf8');
+    }
 
-      return 'no file';
+    return 'no file';
     })
     .then((contents) => {
       // log the file contents
