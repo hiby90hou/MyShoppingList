@@ -86,7 +86,7 @@ async componentWillMount() {
     )
   }
 
-componentWillUnmount(){
+async componentWillUnmount(){
     const {state, initState} = this.props
 
     // update upload time
@@ -117,7 +117,29 @@ RNFS.writeFile(path, saveStr, 'utf8')
   .catch((err) => {
     console.log(err.message);
   });
+  //save data to database
+  let savestr2 = JSON.stringify(newState.todos);
+  try {
+    let response = await fetch('http://192.168.1.5:3000/api/v1/users/Richard%20Burke', {
+      method: 'PUT',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        todos: savestr2,
+        updated_at: newState.uploadTime
+      })
+    });
+    console.log(response)
+  } catch (error) {
+    console.error(error);
   }
+  
+  }
+
+  
 }
+
 
 export default readFile
