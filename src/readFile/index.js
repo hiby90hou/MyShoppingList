@@ -15,8 +15,22 @@ async componentWillMount() {
       'http://192.168.1.5:3000/api/v1/users/'+state.userName
     );
     let responseJson = await response.json();
-    // return responseJson.movies;
-    console.log(responseJson)
+    console.log(responseJson);
+    if(responseJson.status==="SUCCESS"){
+      console.log("data receive success");
+      let todosPar = responseJson.data.todos.replace(/\_(\w)/g, function(all, letter){
+          return letter.toUpperCase();
+        });
+      console.log(todosPar)
+
+      // let newState = {
+      //   barCode: "null",
+      //   isAllDone: responseJson.is_all_done,
+
+      // }
+      // console.log(newState)
+      // initState(newState)
+    }
   } catch (error) {
     console.error(error);
   }
@@ -38,7 +52,7 @@ async componentWillMount() {
       // log the file contents
       let newState = JSON.parse(contents)
       console.log(newState)
-      initState(newState)
+      // initState(newState)
     })
     .catch((err) => {
       console.log(err.message, err.code);
