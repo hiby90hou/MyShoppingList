@@ -18,18 +18,19 @@ async componentWillMount() {
     console.log(responseJson);
     if(responseJson.status==="SUCCESS"){
       console.log("data receive success");
-      let todosPar = responseJson.data.todos.replace(/\_(\w)/g, function(all, letter){
-          return letter.toUpperCase();
-        });
+      let todosPar = JSON.parse(responseJson.data.todos);
       console.log(todosPar)
 
-      // let newState = {
-      //   barCode: "null",
-      //   isAllDone: responseJson.is_all_done,
-
-      // }
-      // console.log(newState)
-      // initState(newState)
+      let newState = {
+        barCode: "null",
+        isAllDone: responseJson.data.is_all_done,
+        userName: responseJson.data.user_name,
+        password: responseJson.data.password,
+        todos: todosPar,
+        uploadTime: responseJson.data.updated_at
+      }
+      console.log(newState)
+      initState(newState)
     }
   } catch (error) {
     console.error(error);
@@ -37,26 +38,26 @@ async componentWillMount() {
 
 
   //create a path you want to read
-  const path = RNFS.ExternalDirectoryPath + '/MyShoppingList/'+state.userName+'shoppingListData.json';
-  RNFS.readFile(path)
-  .then((statResult) => {
-    console.log(RNFS.exists(path));
-    if (RNFS.exists(path)) {
-      // if we have a file, read it
-      return RNFS.readFile(path, 'utf8');
-    }
+  // const path = RNFS.ExternalDirectoryPath + '/MyShoppingList/'+state.userName+'shoppingListData.json';
+  // RNFS.readFile(path)
+  // .then((statResult) => {
+  //   console.log(RNFS.exists(path));
+  //   if (RNFS.exists(path)) {
+  //     // if we have a file, read it
+  //     return RNFS.readFile(path, 'utf8');
+  //   }
 
-    return 'no file';
-    })
-    .then((contents) => {
-      // log the file contents
-      let newState = JSON.parse(contents)
-      console.log(newState)
-      // initState(newState)
-    })
-    .catch((err) => {
-      console.log(err.message, err.code);
-    });
+  //   return 'no file';
+  //   })
+  //   .then((contents) => {
+  //     // log the file contents
+  //     let newState = JSON.parse(contents)
+  //     console.log(newState)
+  //     initState(newState)
+  //   })
+  //   .catch((err) => {
+  //     console.log(err.message, err.code);
+  //   });
   }
 
 
@@ -86,7 +87,7 @@ async componentWillMount() {
     )
   }
 
-async componentWillUnmount(){
+componentWillUnmount(){
     const {state, initState} = this.props
 
     // update upload time
@@ -109,36 +110,56 @@ RNFS.mkdir(RNFS.ExternalDirectoryPath +'/MyShoppingList/')
 
 // write the file
 RNFS.writeFile(path, saveStr, 'utf8')
-  .then((success) => {
+  .then(async (success) => {
     console.log('FILE WRITTEN! Path:');
     console.log(path);
     // console.log(path);
-  })
-  .catch((err) => {
-    console.log(err.message);
-  });
-  //save data to database
-  let savestr2 = JSON.stringify(newState.todos);
-  try {
-    let response = await fetch('http://192.168.1.5:3000/api/v1/users/Richard%20Burke', {
-      method: 'PUT',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        todos: savestr2,
-        updated_at: newState.uploadTime
-      })
-    });
-    console.log(response)
-  } catch (error) {
-    console.error(error);
-  }
-  
-  }
+    //save data to database
+    let savestr2 = JSON.stringify(newState.todos);
+    try {
+      let response = await fetch('http://192.168.1.5:3000/api/v1/users/'+state.userName, {
+        method: 'PUT',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          todos: savestr2,
+          updated_at: newState.uploadTime
+        })
+      });
+      console.log(response)
+    } catch (error) {
+      console.error(error);
+    }
+    
 
-  
+    
+  })
+  .catch(async (err) => {
+    console.log(err.message);
+
+    //save data to database
+    let savestr2 = JSON.stringify(newState.todos);
+    try {
+      let response = await fetch('http://192.168.1.5:3000/api/v1/users/'+state.userName, {
+        method: 'PUT',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          todos: savestr2,
+          updated_at: newState.uploadTime
+        })
+      });
+      console.log(response)
+    } catch (error) {
+      console.error(error);
+    }
+    
+  });
+  }
 }
 
 
