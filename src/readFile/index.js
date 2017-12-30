@@ -3,61 +3,67 @@ import { View, Text,Button, TextInput } from 'react-native';
 import RNFS from 'react-native-fs';
 
 class readFile extends Component {
-async componentWillMount() {
+componentWillMount() {
   const {state, initState} = this.props
   //read file
   // require the module
   var RNFS = require('react-native-fs');
 
-  //check server, if has this user name, get user data from server
-  try {
-    let response = await fetch(
-      'http://192.168.1.5:3000/api/v1/users/'+state.userName
-    );
-    let responseJson = await response.json();
-    console.log(responseJson);
-    if(responseJson.status==="SUCCESS"){
-      console.log("data receive success");
-      let todosPar = JSON.parse(responseJson.data.todos);
-      console.log(todosPar)
-
-      let newState = {
-        barCode: "null",
-        isAllDone: responseJson.data.is_all_done,
-        userName: responseJson.data.user_name,
-        password: responseJson.data.password,
-        todos: todosPar,
-        uploadTime: responseJson.data.updated_at
-      }
-      console.log(newState)
-      initState(newState)
-    }
-  } catch (error) {
-    console.error(error);
-  }
-
-
   //create a path you want to read
-  // const path = RNFS.ExternalDirectoryPath + '/MyShoppingList/'+state.userName+'shoppingListData.json';
-  // RNFS.readFile(path)
-  // .then((statResult) => {
-  //   console.log(RNFS.exists(path));
-  //   if (RNFS.exists(path)) {
-  //     // if we have a file, read it
-  //     return RNFS.readFile(path, 'utf8');
-  //   }
+  const path = RNFS.ExternalDirectoryPath + '/MyShoppingList/'+state.userName+'shoppingListData.json';
+  RNFS.readFile(path)
+  .then((statResult) => {
+    console.log(RNFS.exists(path));
+    if (RNFS.exists(path)) {
+      // if we have a file, read it
+      return RNFS.readFile(path, 'utf8');
+    }
 
-  //   return 'no file';
-  //   })
-  //   .then((contents) => {
-  //     // log the file contents
-  //     let newState = JSON.parse(contents)
-  //     console.log(newState)
-  //     initState(newState)
-  //   })
-  //   .catch((err) => {
-  //     console.log(err.message, err.code);
-  //   });
+    return 'no file';
+    })
+    .then(async (contents) => {
+      // log the file contents
+      let newState = JSON.parse(contents)
+      console.log(newState)
+
+      // if the update time of local data is older then the server data, use the server data
+      //check server, if has this user name, get user data from server
+      try {
+        let response = await fetch(
+          'http://192.168.1.5:3000/api/v1/users/'+state.userName
+        );
+        let responseJson = await response.json();
+        console.log(responseJson);
+        if(responseJson.status==="SUCCESS"){
+          console.log("data receive success");
+          let todosPar = JSON.parse(responseJson.data.todos)
+          console.log(todosPar)
+
+          let newServerState = {
+            barCode: "null",
+            isAllDone: responseJson.data.is_all_done,
+            userName: responseJson.data.user_name,
+            password: responseJson.data.password,
+            todos: todosPar,
+            uploadTime: responseJson.data.updated_at
+          }
+          console.log(newServerState)
+          if(Date.parse(newServerState.uploadTime)>Date.parse(newState.uploadTime)){
+            console.log("newServerState.uploadTime>newState.uploadTime")
+            initState(newServerState)
+          }else{
+            initState(newState)
+            
+          }
+        }
+      } catch (error) {
+        console.error(error)
+        initState(newState)
+      }
+    })
+    .catch(async (err) => {
+      console.log(err.message, err.code);
+    });
   }
 
 
