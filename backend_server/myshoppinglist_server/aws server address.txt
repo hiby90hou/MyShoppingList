@@ -1,0 +1,4 @@
+http://52.65.191.122
+
+mysql username:root
+password: my common password
