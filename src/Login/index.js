@@ -19,10 +19,8 @@ class Login extends Component {
   }
 
 
-  loginCheck = ()=>{
+  loginCheck = async()=>{
     const {updateUserName} = this.props
-
-
     //read UserLog file
     console.log("readfile")
 
@@ -39,80 +37,104 @@ class Login extends Component {
         // if we have a file, read it
         return RNFS.readFile(path, 'utf8');
       }
-
       return 'no file';
     })
-    .then((contents) => {
+    .then(async (contents) => {
       // log the file contents
       let userLog = JSON.parse(contents)
-    //   this.setState({
-    //     userLog
-    //   })
 
       console.log("userLog")
       console.log(userLog)
     
-    //check user
+      //check user
 
-    let errorAlert = true
+      let errorAlert = true
 
-    for(let i=0;i<userLog.length;i++){
-      if(userLog[i].username==this.state.inputUserName && 
-        userLog[i].password==this.state.inputPassword){
+      for(let i=0;i<userLog.length;i++){
+        if(userLog[i].username==this.state.inputUserName && 
+          userLog[i].password==this.state.inputPassword){
 
-        //if autoLogin switch is open,change the user Log and save it
-        if(this.state.autoLogin==true){
-          console.log("autoLogin is open")
+          //if autoLogin switch is open,change the user Log and save it
+          if(this.state.autoLogin==true){
+            console.log("autoLogin is open")
 
-          //set all of the autoLogin to false
-          for(let j=0;j<userLog.length;j++){
-            userLog[j].autoLogin = false
-          } 
-          //set current autoLogin to true
-          userLog[i].autoLogin = true
+            //set all of the autoLogin to false
+            for(let j=0;j<userLog.length;j++){
+              userLog[j].autoLogin = false
+            } 
+            //set current autoLogin to true
+            userLog[i].autoLogin = true
 
-          //write file
-          // require the module
-          var RNFS = require('react-native-fs');
+            //write file
+            // require the module
+            var RNFS = require('react-native-fs');
 
-          var saveStr = JSON.stringify(userLog)
-          // console.log(userLog);
+            var saveStr = JSON.stringify(userLog)
+            // console.log(userLog);
 
-          // create a path you want to write to
-          const path = RNFS.ExternalDirectoryPath + '/MyShoppingList/userLog.json';
+            // create a path you want to write to
+            const path = RNFS.ExternalDirectoryPath + '/MyShoppingList/userLog.json';
 
-          //make dir for this file
-          RNFS.mkdir(RNFS.ExternalDirectoryPath +'/MyShoppingList/')
+            //make dir for this file
+            RNFS.mkdir(RNFS.ExternalDirectoryPath +'/MyShoppingList/')
 
-          // write the file
-          RNFS.writeFile(path, saveStr, 'utf8')
-            .then((success) => {
-              console.log('USERLOG FILE WRITTEN! Path:');
-              console.log(path);
-              // console.log(path);
-            })
-            .catch((err) => {
-              console.log(err.message);
-            });
+            // write the file
+            RNFS.writeFile(path, saveStr, 'utf8')
+              .then((success) => {
+                console.log('USERLOG FILE WRITTEN! Path:');
+                console.log(path);
+                // console.log(path);
+              })
+              .catch((err) => {
+                console.log(err.message);
+              });
 
+          }
+
+          updateUserName(this.state.inputUserName)
+          errorAlert = false
+        }
+      }
+
+      //check server, if server has this user, login
+      //need to be improve: password checking
+      try {
+        let response = await fetch(
+          'http://13.210.215.68:3000/api/v1/users/'+ this.state.inputUserName);
+        let responseJson = await response.json();
+        console.log(responseJson);
+        if(responseJson.status==="SUCCESS"){
+          console.log("data receive success")
+          if(responseJson.data.password == this.state.inputPassword){
+            updateUserName(this.state.inputUserName)
+            errorAlert = false
+          }
         }
 
-        updateUserName(this.state.inputUserName)
-        errorAlert = false
+        if(errorAlert){
+          Alert.alert(
+            'Wrong Password',
+            'Please try again',
+            [       
+              {text: 'OK', onPress: () =>{console.log('inputUserName:'+this.state.inputUserName);console.log('inputPassword:'+this.state.inputPassword);}},
+            ],
+            { cancelable: false }
+          )
+        }
+      } catch (error) {
+          console.error(error)
+        if(errorAlert){
+          Alert.alert(
+            'Wrong Password',
+            'Please try again',
+            [       
+              {text: 'OK', onPress: () =>{console.log('inputUserName:'+this.state.inputUserName);console.log('inputPassword:'+this.state.inputPassword);}},
+            ],
+            { cancelable: false }
+          )
+        }
       }
-    }
 
-
-    if(errorAlert){
-            Alert.alert(
-        'Wrong Password',
-        'Please try again',
-        [       
-          {text: 'OK', onPress: () =>{console.log('inputUserName:'+this.state.inputUserName);console.log('inputPassword:'+this.state.inputPassword);}},
-        ],
-        { cancelable: false }
-      )
-    }
 
     })
     .catch((err) => {

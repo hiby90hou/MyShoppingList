@@ -63,6 +63,31 @@ componentWillMount() {
     })
     .catch(async (err) => {
       console.log(err.message, err.code);
+      // if we cannot find user in local but can find him in the server, download the data
+      try {
+        let response = await fetch(
+          'http://13.210.215.68:3000/api/v1/users/' + state.userName
+        );
+        let responseJson = await response.json();
+        if (responseJson.status === "SUCCESS") {
+          console.log("find user in database, download data");
+          let todosPar = JSON.parse(responseJson.data.todos)
+          console.log(todosPar)
+
+          let newServerState = {
+            barCode: "null",
+            isAllDone: responseJson.data.is_all_done,
+            userName: responseJson.data.user_name,
+            password: responseJson.data.password,
+            todos: todosPar,
+            uploadTime: responseJson.data.updated_at
+          }
+          initState(newServerState)
+        }
+      } catch (error) {
+        console.error(error)
+        initState(newState)
+      }
     });
   }
 
