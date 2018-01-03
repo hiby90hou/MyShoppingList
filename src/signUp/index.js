@@ -57,14 +57,14 @@ class signUp extends Component {
     });
     
   	//go back button setting
-	this.backButtonListener = BackHandler.addEventListener('hardwareBackPress',()=>{
+		this.backButtonListener = BackHandler.addEventListener('hardwareBackPress',()=>{
 		const {handleSignUp, signUp} = this.props
   	// console.log(this.props);
 	   if(signUp==true){
 	   	console.log('goback');
-	  	  ToastAndroid.show('Go back to Sign in Page',ToastAndroid.SHORT);
+	  	ToastAndroid.show('Go back to Sign in Page',ToastAndroid.SHORT);
 			handleSignUp()
-	    	return true
+	    return true
 	   }
 	  return false
 	})
@@ -93,21 +93,42 @@ class signUp extends Component {
 
 	
  
- 	loginCheck = () =>{
- 		const {handleSignUp,updateUserName,initState}= this.props
+ 	loginCheck = async () =>{
+ 		const {handleSignUp,updateUserName,initState} = this.props
 
- 		checkArr = (username) => {
+ 		checkArr = async (username) => {
 			console.log("checkArr")
-			let Arr = this.state.userLog
-			for(let i=0;i<Arr.length;i++){
-				console.log(Arr[i].username)
-				if(Arr[i].username==username){
-					console.log('pass checkArr')
-					return true
-				}
-			}
-			return false
-		}
+		  try {
+      let response = await fetch(
+        'http://13.210.215.68:3000/api/v1/users/'+ username
+      );
+      let responseJson = await response.json();
+      console.log(responseJson);
+      if(responseJson.status==="SUCCESS"){
+      	// find out the username in database
+      	// cannot use this user name as a new user
+      	return true
+        }else{
+	        //username is not in the database
+					//check local user list
+					// let Arr = this.state.userLog
+					// for(let i=0;i<Arr.length;i++){
+					// 	console.log(Arr[i].username)
+					// 	if(Arr[i].username==username){
+					// 		console.log('pass checkArr')
+					// 		return true
+					// 	}
+					// }
+					console.log("cannot find username")
+					return false
+        }
+      }
+      catch (error) {
+      console.error('error')
+	  	// if network cannot connect, the username cannot pass the check
+	  }
+	  return true
+	}
 
 
 		if(this.state.inputUserName==''){
@@ -122,9 +143,9 @@ class signUp extends Component {
  			ToastAndroid.showWithGravity('Please input password,\n The min password length is 6',ToastAndroid.SHORT, ToastAndroid.CENTER)
  		console.log('Please input password')
  		}
- 		else if(checkArr(this.state.inputUserName)){
+ 		else if(await checkArr(this.state.inputUserName)){
 			ToastAndroid.showWithGravity('Username already exists',ToastAndroid.SHORT, ToastAndroid.CENTER)
- 		console.log('Username already exists')
+ 			console.log('Username already exists')
  		}
  		else{
  			console.log('else')
@@ -138,7 +159,7 @@ class signUp extends Component {
 		      autoLogin:false
 		    }
 
-		    let newLog = this.state.userLog
+		  let newLog = this.state.userLog
  			newLog.push(newUser)
  			console.log(newLog)
 
@@ -158,11 +179,34 @@ class signUp extends Component {
 
 			// write the file
 			RNFS.writeFile(path, saveStr, 'utf8')
-			  .then((success) => {
+			  .then(async (success) => {
 			    console.log('USERLOG FILE WRITTEN! Path:');
 			    console.log(path);
 			    // console.log(path);
-			  })
+
+			    //create new user in server
+    		  try {
+			      let response = await fetch(
+			        'http://13.210.215.68:3000/api/v1/users',
+			        {
+			        method: 'POST',
+			        headers: {
+			          Accept: 'application/json',
+			          'Content-Type': 'application/json',
+			        },
+			        body: JSON.stringify({
+			          todos: '[]',
+			          is_all_done: "true",
+                user_name: this.state.inputUserName,
+								password: this.state.inputPassword1
+			        })
+			      });
+			      let responseJson = await response.json();
+      			console.log(responseJson);
+			    } catch (error) {
+			      console.error(error)
+			    }
+				})
 			  .catch((err) => {
 			    console.log(err.message);
 			  });

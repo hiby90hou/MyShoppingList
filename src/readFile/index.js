@@ -30,7 +30,7 @@ componentWillMount() {
       //check server, if has this user name, get user data from server
       try {
         let response = await fetch(
-          'http://192.168.1.5:3000/api/v1/users/'+state.userName
+          'http://13.210.215.68:3000/api/v1/users/'+state.userName
         );
         let responseJson = await response.json();
         console.log(responseJson);
@@ -123,7 +123,7 @@ RNFS.writeFile(path, saveStr, 'utf8')
     //save data to database
     let savestr2 = JSON.stringify(newState.todos);
     try {
-      let response = await fetch('http://192.168.1.5:3000/api/v1/users/'+state.userName, {
+      let response = await fetch('http://13.210.215.68:3000/api/v1/users/'+state.userName, {
         method: 'PUT',
         headers: {
           Accept: 'application/json',
@@ -148,7 +148,7 @@ RNFS.writeFile(path, saveStr, 'utf8')
     //save data to database
     let savestr2 = JSON.stringify(newState.todos);
     try {
-      let response = await fetch('http://192.168.1.5:3000/api/v1/users/'+state.userName, {
+      let response = await fetch('http://13.210.215.68:3000/api/v1/users/'+state.userName, {
         method: 'PUT',
         headers: {
           Accept: 'application/json',
