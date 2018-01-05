@@ -100,27 +100,28 @@ class signUp extends Component {
 			console.log("checkArr")
 		  try {
       let response = await fetch(
-        'http://13.210.215.68:3000/api/v1/users/'+ username
+        'http://192.168.1.5:3000/api/v1/users/'+ username
       );
       let responseJson = await response.json();
       console.log(responseJson);
-      if(responseJson.status==="SUCCESS"){
+      if(responseJson.message == "username and password are not match"){
       	// find out the username in database
       	// cannot use this user name as a new user
       	return true
-        }else{
+      }
+      else{
 	        //username is not in the database
-					//check local user list
-					// let Arr = this.state.userLog
-					// for(let i=0;i<Arr.length;i++){
-					// 	console.log(Arr[i].username)
-					// 	if(Arr[i].username==username){
-					// 		console.log('pass checkArr')
-					// 		return true
-					// 	}
-					// }
-					console.log("cannot find username")
-					return false
+			//check local user list
+			// let Arr = this.state.userLog
+			// for(let i=0;i<Arr.length;i++){
+			// 	console.log(Arr[i].username)
+			// 	if(Arr[i].username==username){
+			// 		console.log('pass checkArr')
+			// 		return true
+			// 	}
+			// }
+			console.log("cannot find username")
+			return false
         }
       }
       catch (error) {
@@ -187,7 +188,7 @@ class signUp extends Component {
 			    //create new user in server
     		  try {
 			      let response = await fetch(
-			        'http://13.210.215.68:3000/api/v1/users',
+			        'http://192.168.1.5:3000/api/v1/users',
 			        {
 			        method: 'POST',
 			        headers: {
@@ -198,7 +199,8 @@ class signUp extends Component {
 			          todos: '[]',
 			          is_all_done: "true",
                 user_name: this.state.inputUserName,
-								password: this.state.inputPassword1
+					  		password: this.state.inputPassword1,
+					  		password_confirmation: this.state.inputPassword2
 			        })
 			      });
 			      let responseJson = await response.json();

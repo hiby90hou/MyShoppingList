@@ -54,12 +54,14 @@ class App extends Component {
       password,
       uploadTime
     })
+    console.log(this.state)
   }
 
-  //Only update User Name
-  updateUserName = (username) =>{
+  //Only update User Name and password
+  updateUserName = (username,password) =>{
     this.setState({
-      userName:username
+      userName:username,
+      password:password
     })
     console.log(this.state)
   }
@@ -83,6 +85,7 @@ class App extends Component {
       todos,
       isAllDone:isAllDone.length===0&&todos.length>0
     })
+    console.log(this.state)
   }
 
   //删除所有选中的todo
@@ -139,7 +142,7 @@ componentWillMount(){
      if(this.state.userName=='default'){
       console.log('userName goback');
       ToastAndroid.show('Go back to Sign in Page',ToastAndroid.SHORT);
-      this.updateUserName('null')
+      this.updateUserName('null',this.state.password)
       return true
      }
      else if(this.state.userName!='null'){
@@ -167,9 +170,6 @@ componentWillUnmount(){
 
 
   render() {
-
-
-
     console.log('render')
     console.log(this.state)
     // defined style

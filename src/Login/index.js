@@ -91,22 +91,22 @@ class Login extends Component {
 
           }
 
-          updateUserName(this.state.inputUserName)
+          updateUserName(this.state.inputUserName,this.state.inputPassword)
           errorAlert = false
         }
       }
 
       //check server, if server has this user, login
-      //need to be improve: password checking
+      //password checking had been improved by server side
       try {
         let response = await fetch(
-          'http://13.210.215.68:3000/api/v1/users/'+ this.state.inputUserName);
+          'http://192.168.1.5:3000/api/v1/users/'+ this.state.inputUserName +'?password='+this.state.inputPassword);
         let responseJson = await response.json();
         console.log(responseJson);
         if(responseJson.status==="SUCCESS"){
           console.log("data receive success")
           if(responseJson.data.password == this.state.inputPassword){
-            updateUserName(this.state.inputUserName)
+            updateUserName(this.state.inputUserName,this.state.inputPassword)
             errorAlert = false
           }
         }
@@ -183,7 +183,7 @@ class Login extends Component {
     const {updateUserName} = this.props
     console.log('defaultLogin');
     let correctUserName = 'default'
-    updateUserName(correctUserName)
+    updateUserName(correctUserName,null)
   }
 
   handleUserName = (inputUserName) =>{ 

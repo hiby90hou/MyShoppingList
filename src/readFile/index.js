@@ -24,13 +24,15 @@ componentWillMount() {
     .then(async (contents) => {
       // log the file contents
       let newState = JSON.parse(contents)
+      newState.password = state.password
+      console.log('newState')
       console.log(newState)
 
       // if the update time of local data is older then the server data, use the server data
       //check server, if has this user name, get user data from server
       try {
         let response = await fetch(
-          'http://13.210.215.68:3000/api/v1/users/'+state.userName
+          'http://192.168.1.5:3000/api/v1/users/'+state.userName+'?password='+state.password
         );
         let responseJson = await response.json();
         console.log(responseJson);
@@ -43,7 +45,7 @@ componentWillMount() {
             barCode: "null",
             isAllDone: responseJson.data.is_all_done,
             userName: responseJson.data.user_name,
-            password: responseJson.data.password,
+            password: state.password,
             todos: todosPar,
             uploadTime: responseJson.data.updated_at
           }
@@ -66,7 +68,7 @@ componentWillMount() {
       // if we cannot find user in local but can find him in the server, download the data
       try {
         let response = await fetch(
-          'http://13.210.215.68:3000/api/v1/users/' + state.userName
+          'http://192.168.1.5:3000/api/v1/users/'+state.userName+'?password='+state.password
         );
         let responseJson = await response.json();
         if (responseJson.status === "SUCCESS") {
@@ -78,7 +80,7 @@ componentWillMount() {
             barCode: "null",
             isAllDone: responseJson.data.is_all_done,
             userName: responseJson.data.user_name,
-            password: responseJson.data.password,
+            password: state.password,
             todos: todosPar,
             uploadTime: responseJson.data.updated_at
           }
@@ -148,7 +150,7 @@ RNFS.writeFile(path, saveStr, 'utf8')
     //save data to database
     let savestr2 = JSON.stringify(newState.todos);
     try {
-      let response = await fetch('http://13.210.215.68:3000/api/v1/users/'+state.userName, {
+      let response = await fetch('http://192.168.1.5:3000/api/v1/users/'+state.userName+'?password='+newState.password, {
         method: 'PUT',
         headers: {
           Accept: 'application/json',
@@ -173,7 +175,7 @@ RNFS.writeFile(path, saveStr, 'utf8')
     //save data to database
     let savestr2 = JSON.stringify(newState.todos);
     try {
-      let response = await fetch('http://13.210.215.68:3000/api/v1/users/'+state.userName, {
+      let response = await fetch('http://192.168.1.5:3000/api/v1/users/'+state.userName+'?password='+state.password, {
         method: 'PUT',
         headers: {
           Accept: 'application/json',
