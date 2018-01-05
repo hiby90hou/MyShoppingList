@@ -28,39 +28,44 @@ componentWillMount() {
       console.log('newState')
       console.log(newState)
 
-      // if the update time of local data is older then the server data, use the server data
-      //check server, if has this user name, get user data from server
-      try {
-        let response = await fetch(
-          'http://192.168.1.5:3000/api/v1/users/'+state.userName+'?password='+state.password
-        );
-        let responseJson = await response.json();
-        console.log(responseJson);
-        if(responseJson.status==="SUCCESS"){
-          console.log("data receive success");
-          let todosPar = JSON.parse(responseJson.data.todos)
-          console.log(todosPar)
-
-          let newServerState = {
-            barCode: "null",
-            isAllDone: responseJson.data.is_all_done,
-            userName: responseJson.data.user_name,
-            password: state.password,
-            todos: todosPar,
-            uploadTime: responseJson.data.updated_at
-          }
-          console.log(newServerState)
-          if(Date.parse(newServerState.uploadTime)>Date.parse(newState.uploadTime)){
-            console.log("newServerState.uploadTime>newState.uploadTime")
-            initState(newServerState)
-          }else{
-            initState(newState)
-            
-          }
-        }
-      } catch (error) {
-        console.error(error)
+      if(state.userName==='default'){
         initState(newState)
+      }
+      else{
+        // if the update time of local data is older then the server data, use the server data
+        //check server, if has this user name, get user data from server
+        try {
+          let response = await fetch(
+            'http://192.168.1.5:3000/api/v1/users/'+state.userName+'?password='+state.password
+          );
+          let responseJson = await response.json();
+          console.log(responseJson);
+          if(responseJson.status==="SUCCESS"){
+            console.log("data receive success");
+            let todosPar = JSON.parse(responseJson.data.todos)
+            console.log(todosPar)
+
+            let newServerState = {
+              barCode: "null",
+              isAllDone: responseJson.data.is_all_done,
+              userName: responseJson.data.user_name,
+              password: state.password,
+              todos: todosPar,
+              uploadTime: responseJson.data.updated_at
+            }
+            console.log(newServerState)
+            if(Date.parse(newServerState.uploadTime)>Date.parse(newState.uploadTime)){
+              console.log("newServerState.uploadTime>newState.uploadTime")
+              initState(newServerState)
+            }else{
+              initState(newState)
+              
+            }
+          }
+        } catch (error) {
+          console.error(error)
+          initState(newState)
+        }
       }
     })
     .catch(async (err) => {
@@ -164,10 +169,7 @@ RNFS.writeFile(path, saveStr, 'utf8')
       console.log(response)
     } catch (error) {
       console.error(error);
-    }
-    
-
-    
+    }   
   })
   .catch(async (err) => {
     console.log(err.message);
