@@ -80,14 +80,14 @@ class Login extends Component {
 
             // write the file
             RNFS.writeFile(path, saveStr, 'utf8')
-              .then((success) => {
-                console.log('USERLOG FILE WRITTEN! Path:');
-                console.log(path);
-                // console.log(path);
-              })
-              .catch((err) => {
-                console.log(err.message);
-              });
+            .then((success) => {
+              console.log('USERLOG FILE WRITTEN! Path:');
+              console.log(path);
+              // console.log(path);
+            })
+            .catch((err) => {
+              console.log(err.message);
+            });
 
           }
 
