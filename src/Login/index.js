@@ -105,10 +105,45 @@ class Login extends Component {
         console.log(responseJson);
         if(responseJson.status==="SUCCESS"){
           console.log("data receive success")
-          if(responseJson.data.password == this.state.inputPassword){
-            updateUserName(this.state.inputUserName,this.state.inputPassword)
-            errorAlert = false
-          }
+
+          // change local user log
+          const newUser = {
+              username:this.state.inputUserName, 
+              password:this.state.inputPassword, 
+              autoLogin:this.state.autoLogin
+            }
+
+          let newLog = userLog
+          newLog.push(newUser)
+          console.log(newLog)
+
+          // write file
+
+          // require the module
+          var RNFS = require('react-native-fs');
+
+          var saveStr = JSON.stringify(newLog)
+          console.log(saveStr);
+
+          // create a path you want to write to
+          const path = RNFS.ExternalDirectoryPath + '/MyShoppingList/userLog.json';
+
+          //make dir for this file
+          RNFS.mkdir(RNFS.ExternalDirectoryPath +'/MyShoppingList/')
+
+          // write the file
+          RNFS.writeFile(path, saveStr, 'utf8')
+          .then(async (success) => {
+            console.log('USERLOG FILE WRITTEN! Path:');
+            console.log(path);
+          })
+          .catch((err) => {
+            console.log(err.message);
+          });
+
+          //jump to todo list page
+          updateUserName(this.state.inputUserName,this.state.inputPassword)
+          errorAlert = false
         }
 
         if(errorAlert){
@@ -157,7 +192,7 @@ class Login extends Component {
             autoLogin:this.state.autoLogin
           }
 
-          let newLog = []
+          let newLog = [{username:'default', password:'default', autoLogin:false}]
           newLog.push(newUser)
           console.log(newLog)
 
