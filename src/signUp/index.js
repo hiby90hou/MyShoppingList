@@ -100,7 +100,7 @@ class signUp extends Component {
 			console.log("checkArr")
 		  try {
       let response = await fetch(
-        'http://192.168.1.5:3000/api/v1/users/'+ username
+        'http://13.210.215.68:3000/api/v1/users/'+ username
       );
       let responseJson = await response.json();
       console.log(responseJson);
@@ -188,7 +188,7 @@ class signUp extends Component {
 			    //create new user in server
     		  try {
 			      let response = await fetch(
-			        'http://192.168.1.5:3000/api/v1/users',
+			        'http://13.210.215.68:3000/api/v1/users',
 			        {
 			        method: 'POST',
 			        headers: {
@@ -225,7 +225,7 @@ class signUp extends Component {
 
 			initState(newState)
 			handleSignUp()
-			updateUserName(this.state.inputUserName)
+			updateUserName(this.state.inputUserName, this.state.inputPassword1)
  		}
    
   }
