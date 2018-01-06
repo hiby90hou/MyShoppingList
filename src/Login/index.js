@@ -134,11 +134,81 @@ class Login extends Component {
           )
         }
       }
-
-
     })
-    .catch((err) => {
+    .catch(async(err) => {
       console.log(err.message, err.code);
+
+      let errorAlert = true
+      //check server, if server has this user, login
+      //password checking had been improved by server side
+      try {
+        let response = await fetch(
+          'http://13.210.215.68:3000/api/v1/users/'+ this.state.inputUserName +'?password='+this.state.inputPassword);
+        let responseJson = await response.json();
+        console.log(responseJson);
+        if(responseJson.status==="SUCCESS"){
+          console.log("data receive success")
+          updateUserName(this.state.inputUserName,this.state.inputPassword)
+          errorAlert = false
+          //write user log to local
+          const newUser = {
+            username:this.state.inputUserName, 
+            password:this.state.inputPassword, 
+            autoLogin:this.state.autoLogin
+          }
+
+          let newLog = []
+          newLog.push(newUser)
+          console.log(newLog)
+
+          // write file
+
+          // require the module
+          var RNFS = require('react-native-fs');
+
+          var saveStr = JSON.stringify(newLog)
+          console.log(saveStr);
+
+          // create a path you want to write to
+          const path = RNFS.ExternalDirectoryPath + '/MyShoppingList/userLog.json';
+
+          //make dir for this file
+          RNFS.mkdir(RNFS.ExternalDirectoryPath +'/MyShoppingList/')
+
+          // write the file
+          RNFS.writeFile(path, saveStr, 'utf8')
+          .then(async (success) => {
+            console.log('USERLOG FILE WRITTEN! Path:');
+            console.log(path);
+          })
+          .catch((err) => {
+            console.log(err.message);
+          });
+        }
+
+        if(errorAlert){
+          Alert.alert(
+            'Wrong Password',
+            'Please try again',
+            [       
+              {text: 'OK', onPress: () =>{console.log('inputUserName:'+this.state.inputUserName);console.log('inputPassword:'+this.state.inputPassword);}},
+            ],
+            { cancelable: false }
+          )
+        }
+      } catch (error) {
+          console.error(error)
+        if(errorAlert){
+          Alert.alert(
+            'Wrong Password',
+            'Please try again',
+            [       
+              {text: 'OK', onPress: () =>{console.log('inputUserName:'+this.state.inputUserName);console.log('inputPassword:'+this.state.inputPassword);}},
+            ],
+            { cancelable: false }
+          )
+        }
+      }
     })
   }
 
