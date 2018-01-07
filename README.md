@@ -57,11 +57,11 @@ rails s
 ## 3. Authors
 * **CHANG LIU** - *Initial work* - [hiby90hou](https://github.com/hiby90hou)
 
-I am a GA WDI student with design, project management and engineer background. 
+<span style="color:pink"> I am a GA WDI student with design, project management and engineer background. </span>
 
-Now, I am looking for job! I will be very appreciate if someone can provide me an opportunity.
+<span style="color:pink">Now, I am looking for job! I will be very appreciate if someone can provide me an opportunity.</span>
 
-If you are interesting on me or my project, please contact me by email: 
+<span style="color:pink">If you are interesting on me or my project, please contact me by email: </span> <a href="mailto:chang.liu.programmer@gmail.com">
 
 ## 4. Working LOG
 
@@ -112,8 +112,8 @@ If you are interesting on me or my project, please contact me by email:
 
 ## 5.Issues
 
-    ###1. User cannot change password
-    ###2. Need a recommend food list
+### 1. User cannot change password
+### 2. Need a recommend food list
 
 ## License
 This project is licensed under the MIT License
