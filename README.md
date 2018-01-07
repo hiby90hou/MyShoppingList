@@ -2,6 +2,10 @@
 ## An React-native and rails based apk project
 MyShoppingList is an android app project which can help people to reduce food waste and help them to save money on food shopping. 
 
+## 1. Getting Started for user
+
+This apk can only be installed on android. You can download the apk file by [this link](https://github.com/hiby90hou/MyShoppingList/blob/master/apk_file_release/myshoppinglist1.0.apk) and install it in your smart phone. 
+
 The user base of this app should be the client of supermarket.
 
 When users start to use this app, they can input their shopping goods to the app and make a shopping list. 
@@ -14,8 +18,6 @@ When the item in the shopping list is closing to the expire date(less than 3 day
 
 The user can use their username and password to login, after they sign up in one device. they can use their username and password to login with or without the internet. If they cannot access to internet when they tried to add new records to this app, when they can access to the internet and this app had been opened, they can be directly updated to the server.
 
-## 1. Getting Started for user
-This apk can only be installed on android. You can download the apk file by [this link](https://github.com/hiby90hou/MyShoppingList/blob/master/apk_file_release/myshoppinglist1.0.apk) and install it in your smart phone. 
 
 ## 2. Getting Started for developer
 
