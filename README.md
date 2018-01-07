@@ -56,6 +56,7 @@ rails s
 
 ## 3. Authors
 * **CHANG LIU** - *Initial work* - [hiby90hou](https://github.com/hiby90hou)
+
 I am a GA WDI student with design, project management and engineer background. 
 
 Now, I am looking for job! I will be very appreciate if someone can provide me an opportunity.
@@ -63,6 +64,7 @@ Now, I am looking for job! I will be very appreciate if someone can provide me a
 If you are interesting on me or my project, please contact me by email: 
 
 ## 4. Working LOG
+
 1. my plan
       1.1 core function of the shopping list
       1.2 user system with database
@@ -109,7 +111,9 @@ If you are interesting on me or my project, please contact me by email:
           Working on the function of change let user to change their password.
 
 ## 5.Issues
-    ###1. The password of ruby server is not working
+
+    ###1. User cannot change password
     ###2. Need a recommend food list
+
 ## License
 This project is licensed under the MIT License
