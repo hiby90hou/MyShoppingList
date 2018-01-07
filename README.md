@@ -83,58 +83,58 @@ rails s
 
 2.1 Start with the core function of my app - a list
 
-    a. I need to make a list
+a. I need to make a list
 
-    b. I can add new shopping item to the list
+b. I can add new shopping item to the list
 
-    c. I can delete item from this list
+c. I can delete item from this list
     
 2.2 improve the core function
 
-    a. I can record food expire date of each item in this list
+a. I can record food expire date of each item in this list
 
-    b. I can change food expire date if I got it wrong
+b. I can change food expire date if I got it wrong
 
-    c. If the current date is close to the expire date，warn the user
+c. If the current date is close to the expire date，warn the user
 
-    d. If the food expired, warn the user
+d. If the food expired, warn the user
     
 2.3 the app can restore the list, when I open it, I can see the list which I created last time
 
-    a. Store the data online? No, local first!
+a. Store the data online? No, local first!
 
-    b. Read the stored data file from my phone and show it in the app
-    (react-native-fs)
+b. Read the stored data file from my phone and show it in the app
+(react-native-fs)
     
 2.4 create user account with user name and password
 
-    a. Each user name can have one account with data file and password
+a. Each user name can have one account with data file and password
 
-    b. need a function to create new account
+b. need a function to create new account
 
-    c. Can switch to different account by login and logout
+c. Can switch to different account by login and logout
     
 2.5 add auto login function to the app
 
-    a. in the login page, there is a switch, when the switch is on, when the next time I login in, it can automatic login.
+a. in the login page, there is a switch, when the switch is on, when the next time I login in, it can automatic login.
 
-    b. I need a new variable to store my auto-login value.
+b. I need a new variable to store my auto-login value.
 
-    c. I need to store this variable in my data file
+c. I need to store this variable in my data file
     
 2.6 add scan bar code function
 
-    a. Camera setting
+a. Camera setting
 
-    b. bar-code API
+b. bar-code API
 
-    (react-native camera)
+(react-native camera)
 
 2.7 Create a ruby backend server
 
-    a. Just complete a simple version of ruby server.
+a. Just complete a simple version of ruby server.
 
-    b. Working on the function of change let user to change their password.
+b. Working on the function of change let user to change their password.
 
 ## 5.Issues
 
