@@ -1,4 +1,0 @@
-http://13.210.215.68:3000/api/v1/users
-
-mysql username:root
-password: my common password

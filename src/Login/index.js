@@ -304,7 +304,7 @@ class Login extends Component {
       mainContainer: {
         // flex:1,
         width:300,
-        height:300,
+        height:310,
         backgroundColor: '#fff',
         borderRadius:20,
       },
@@ -359,12 +359,11 @@ class Login extends Component {
       },
       signUp:{
         marginTop:20,
-        alignItems: 'center',
+        alignItems: 'center'
       },
       SignUpText:{
         textAlign:"center"
       }
-
     })
 
     const checkPasswordProps = {
