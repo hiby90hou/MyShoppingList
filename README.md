@@ -1,14 +1,21 @@
-# MyShoppingList - an React-native and rails based apk project
+# [logo]: https://github.com/hiby90hou/MyShoppingList/blob/master/graphic%20design/ic_launcher.png "MyShoppingList Logo"MyShoppingList 
+## An React-native and rails based apk project
 MyShoppingList is an android app project which can help people to reduce food waste and help them to save money on food shopping. 
 
 The user base of this app should be the client of supermarket.
 
-When users start to use this app, they can input their shopping goods to the app and make a shopping list. After that, when they started to shopping in the supermarket, they can tick the box which before the goods name to makesure they purchased this item. In this session, the app can let them to record the food expire date. If they find out they have to buy some extra goods, they can easily recorded them in the app by scan their barcode (I do not have the money to buy api, so this function currently is not working). When the item in the shopping list is closing to the expire date(less than 3 days), the font color will change to red; When it expired, the font color will change to black and cross out, so the user can get warning about their food situation by review their shopping list this app.
+When users start to use this app, they can input their shopping goods to the app and make a shopping list. 
+
+After that, when they started to shopping in the supermarket, they can tick the box which before the goods name to makesure they purchased this item. In this session, the app can let them to record the food expire date. 
+
+If they find out they have to buy some extra goods, they can easily recorded them in the app by scan their barcode (I do not have the money to buy api, so this function currently is not working).
+
+When the item in the shopping list is closing to the expire date(less than 3 days), the font color will change to red; When it expired, the font color will change to black and cross out, so the user can get warning about their food situation by review their shopping list this app.
 
 The user can use their username and password to login, after they sign up in one device. they can use their username and password to login with or without the internet. If they cannot access to internet when they tried to add new records to this app, when they can access to the internet and this app had been opened, they can be directly updated to the server.
 
 ## 1. Getting Started for user
-This apk can only be installed on android. You can download the apk file by [this link](https://github.com/hiby90hou/MyShoppingList/) and install it in your smart phone. 
+This apk can only be installed on android. You can download the apk file by [this link](https://github.com/hiby90hou/MyShoppingList/blob/master/apk_file_release/myshoppinglist1.0.apk) and install it in your smart phone. 
 
 ## 2. Getting Started for developer
 
@@ -47,24 +54,17 @@ rails s
 ```
 6. Go to font end side git folder and run android studio
 
-## Authors
-### 1. Who I am?
+## 3. Authors
+* **CHANG LIU** - *Initial work* - [hiby90hou](https://github.com/hiby90hou)
+I am a GA WDI student with design, project management and engineer background. 
+Now, I am looking for job! I will be very appreciate if someone can provide me an opportunity.
+If you are interesting on me or my project, please contact me by email: 
    1. GA WDI student, PM background
    2. Rookie programmer- I know Javascript, HTML, CSS, and very little ruby
    3. I want to create an app
 
-### 2. The challenge I faced
-   1. No java or android background
-   2. really new to react
-   3. I am learning backend technology
-   
-### 3. Why I choose react-native and the similarity between css and react-native stylesheet
-   1. stylesheet just like CSS
-   
-   2. react is good to create list and react-native is very similar to react
-
-## 4. Just do it
-   ### 1. my plan
+## 4. Working LOG
+1. my plan
       1.1 core function of the shopping list
       1.2 user system with database
       1.3 add barcode scan function
@@ -73,7 +73,7 @@ rails s
       
       ...(on going)
       
-   ### 2. Implement
+2. Implement
       2.1 Start with the core function of my app - a list
           a. I need to make a list
           b. I can add new shopping item to the list
@@ -104,8 +104,11 @@ rails s
           a. Camera setting
           b. bar-code API
           (react-native camera)
+
       2.7 Create a ruby backend server
-          working on it...
+          Just complete a simple version of ruby server.
+          Working on the function of change let user to change their password.
+
 ## 5.Issues
     ###1. The password of ruby server is not working
     ###2. Need a recommend food list
