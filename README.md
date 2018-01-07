@@ -57,11 +57,10 @@ rails s
 ## 3. Authors
 * **CHANG LIU** - *Initial work* - [hiby90hou](https://github.com/hiby90hou)
 I am a GA WDI student with design, project management and engineer background. 
+
 Now, I am looking for job! I will be very appreciate if someone can provide me an opportunity.
+
 If you are interesting on me or my project, please contact me by email: 
-   1. GA WDI student, PM background
-   2. Rookie programmer- I know Javascript, HTML, CSS, and very little ruby
-   3. I want to create an app
 
 ## 4. Working LOG
 1. my plan
