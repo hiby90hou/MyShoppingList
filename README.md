@@ -59,11 +59,11 @@ rails s
 ## 3. Authors
 * **CHANG LIU** - *Initial work* - [hiby90hou](https://github.com/hiby90hou)
 
-<span style="color:pink"> I am a GA WDI student with design, project management and engineer background. </span>
+<span style="color:red"> I am a GA WDI student with design, project management and engineer background. </span>
 
-<span style="color:pink">Now, I am looking for job! I will be very appreciate if someone can provide me an opportunity.</span>
+<span style="color:red">Now, I am looking for job! I will be very appreciate if someone can provide me an opportunity.</span>
 
-<span style="color:pink">If you are interesting on me or my project, please contact me by email: </span> <a href="mailto:chang.liu.programmer@gmail.com">chang.liu.programmer@gmail.com</a>
+<span style="color:red">If you are interesting on me or my project, please contact me by email: </span> <a href="mailto:chang.liu.programmer@gmail.com">chang.liu.programmer@gmail.com</a>
 
 ## 4. Working LOG
 
