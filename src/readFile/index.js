@@ -36,7 +36,7 @@ componentWillMount() {
         //check server, if has this user name, get user data from server
         try {
           let response = await fetch(
-            'http://13.210.215.68:3000/api/v1/users/'+state.userName+'?password='+state.password
+            'http://13.210.171.212:3000/api/v1/users/'+state.userName+'?password='+state.password
           );
           let responseJson = await response.json();
           console.log(responseJson);
@@ -73,7 +73,7 @@ componentWillMount() {
       // if we cannot find user in local but can find him in the server, download the data
       try {
         let response = await fetch(
-          'http://13.210.215.68:3000/api/v1/users/'+state.userName+'?password='+state.password
+          'http://13.210.171.212:3000/api/v1/users/'+state.userName+'?password='+state.password
         );
         let responseJson = await response.json();
         if (responseJson.status === "SUCCESS") {
@@ -156,7 +156,7 @@ RNFS.writeFile(path, saveStr, 'utf8')
     //save data to database
     let savestr2 = JSON.stringify(newState.todos);
     try {
-      let response = await fetch('http://13.210.215.68:3000/api/v1/users/'+state.userName+'?password='+newState.password, {
+      let response = await fetch('http://13.210.171.212:3000/api/v1/users/'+state.userName+'?password='+newState.password, {
         method: 'PUT',
         headers: {
           Accept: 'application/json',
@@ -178,7 +178,7 @@ RNFS.writeFile(path, saveStr, 'utf8')
     //save data to database
     let savestr2 = JSON.stringify(newState.todos);
     try {
-      let response = await fetch('http://13.210.215.68:3000/api/v1/users/'+state.userName+'?password='+state.password, {
+      let response = await fetch('http://13.210.171.212:3000/api/v1/users/'+state.userName+'?password='+state.password, {
         method: 'PUT',
         headers: {
           Accept: 'application/json',

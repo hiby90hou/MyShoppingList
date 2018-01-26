@@ -100,7 +100,7 @@ class Login extends Component {
       //password checking had been improved by server side
       try {
         let response = await fetch(
-          'http://13.210.215.68:3000/api/v1/users/'+ this.state.inputUserName +'?password='+this.state.inputPassword);
+          'http://13.210.171.212:3000/api/v1/users/'+ this.state.inputUserName +'?password='+this.state.inputPassword);
         let responseJson = await response.json();
         console.log(responseJson);
         if(responseJson.status==="SUCCESS"){
@@ -178,7 +178,7 @@ class Login extends Component {
       //password checking had been improved by server side
       try {
         let response = await fetch(
-          'http://13.210.215.68:3000/api/v1/users/'+ this.state.inputUserName +'?password='+this.state.inputPassword);
+          'http://13.210.171.212:3000/api/v1/users/'+ this.state.inputUserName +'?password='+this.state.inputPassword);
         let responseJson = await response.json();
         console.log(responseJson);
         if(responseJson.status==="SUCCESS"){
