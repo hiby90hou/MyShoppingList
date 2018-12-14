@@ -51,5 +51,6 @@ buck-out/
 */fastlane/report.xml
 */fastlane/Preview.html
 */fastlane/screenshots
-backend_server/myshoppinglist_server.zip
-android/app/build.gradle
+
+# Bundle artifact
+*.jsbundle

@@ -2,8 +2,6 @@ package com.myshoppinglist;
 
 import com.facebook.react.ReactActivity;
 
-import com.rnfs.RNFSPackage; // <------- add package
-
 public class MainActivity extends ReactActivity {
 
     /**
@@ -14,5 +12,4 @@ public class MainActivity extends ReactActivity {
     protected String getMainComponentName() {
         return "MyShoppingList";
     }
-    
 }
